@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{EB31B326-00AE-4FE8-AA56-E0627611CB31}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetHome.WebApi", "src\PetHome.WebApi\PetHome.WebApi.csproj", "{7B2F5C23-B055-437F-8DF6-24EFBF2A1ABA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetHome.Domain", "src\PetHome.Domain\PetHome.Domain.csproj", "{2F91F104-DBA0-450D-9ED4-5805231BA9E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetHome.Persistence", "src\PetHome.Persistence\PetHome.Persistence.csproj", "{3EE59918-8F37-4B3E-B0D4-F5094D9389E6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7B2F5C23-B055-437F-8DF6-24EFBF2A1ABA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B2F5C23-B055-437F-8DF6-24EFBF2A1ABA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B2F5C23-B055-437F-8DF6-24EFBF2A1ABA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B2F5C23-B055-437F-8DF6-24EFBF2A1ABA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F91F104-DBA0-450D-9ED4-5805231BA9E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F91F104-DBA0-450D-9ED4-5805231BA9E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F91F104-DBA0-450D-9ED4-5805231BA9E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F91F104-DBA0-450D-9ED4-5805231BA9E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3EE59918-8F37-4B3E-B0D4-F5094D9389E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EE59918-8F37-4B3E-B0D4-F5094D9389E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EE59918-8F37-4B3E-B0D4-F5094D9389E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EE59918-8F37-4B3E-B0D4-F5094D9389E6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7B2F5C23-B055-437F-8DF6-24EFBF2A1ABA} = {EB31B326-00AE-4FE8-AA56-E0627611CB31}
+		{2F91F104-DBA0-450D-9ED4-5805231BA9E2} = {EB31B326-00AE-4FE8-AA56-E0627611CB31}
+		{3EE59918-8F37-4B3E-B0D4-F5094D9389E6} = {EB31B326-00AE-4FE8-AA56-E0627611CB31}
+	EndGlobalSection
+EndGlobal
