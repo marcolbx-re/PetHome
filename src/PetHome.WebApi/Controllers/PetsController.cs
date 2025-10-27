@@ -3,6 +3,7 @@ using MasterNet.Application.Core;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PetHome.Application.Core;
 using PetHome.Application.Pets.GetPet;
 using PetHome.Application.Pets.GetPets;
 
@@ -22,7 +23,7 @@ public class PetsController : ControllerBase
 	[AllowAnonymous]
 	[HttpGet]
 	[ProducesResponseType((int)HttpStatusCode.OK)]
-	public async Task<ActionResult<PagedList<PetResponse>>> PaginationInstructor
+	public async Task<ActionResult<PagedList<PetResponse>>> PaginationPet
 	(
 		[FromQuery] GetPetRequest request,
 		CancellationToken cancellationToken
@@ -31,7 +32,7 @@ public class PetsController : ControllerBase
 		var query = new GetPetsQuery.GetPetsQueryRequest {
 			PetRequest = request
 		};
-		var resultados =  await _sender.Send(query, cancellationToken);
+		Result<PagedList<PetResponse>> resultados =  await _sender.Send(query, cancellationToken);
 		return resultados.IsSuccess ? Ok(resultados.Value) : NotFound();
 	}
 }

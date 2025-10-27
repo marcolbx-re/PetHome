@@ -8,7 +8,7 @@
     "TotalCost": 100.00,
     "Notes": "Bring favorite toy",
     "CreatedAt": "2025-10-20T10:00:00Z",
-    "PaymentId": "dddddddd-dddd-dddd-dddd-dddddddddddd"
+    "TransactionId": "dddddddd-dddd-dddd-dddd-dddddddddddd"
   },
   {
     "PetId": "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb",
@@ -19,6 +19,6 @@
     "TotalCost": 80.00,
     "Notes": "Needs hypoallergenic bedding",
     "CreatedAt": "2025-10-21T11:00:00Z",
-    "PaymentId": "eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee"
+    "TransactionId": "eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee"
   }
 ]

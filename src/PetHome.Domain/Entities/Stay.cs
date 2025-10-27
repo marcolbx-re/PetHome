@@ -1,4 +1,6 @@
-﻿namespace PetHome.Domain;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace PetHome.Domain;
 
 public class Stay : BaseEntity
 {
@@ -13,11 +15,12 @@ public class Stay : BaseEntity
     public string Notes { get; private set; }
     public DateTime CreatedAt { get; private set; }
     
-    public Guid? PaymentId { get; private set; }
-    public Transaction Transaction { get; private set; }
+    public Guid? TransactionId { get; private set; }
+    [NotMapped]
+    public Transaction? Transaction { get; private set; }
     
-    private readonly List<CareActivity> _careActivities = new();
-    public IReadOnlyCollection<CareActivity> CareActivities => _careActivities.AsReadOnly();
+    private readonly List<CareActivity>? _careActivities = new();
+    public IReadOnlyCollection<CareActivity>? CareActivities => _careActivities.AsReadOnly();
 
     private Stay() { } // EF Core
 
@@ -70,5 +73,5 @@ public class Stay : BaseEntity
         _careActivities.Add(new CareActivity(Id, type, performedBy, notes));
     }
 
-    public void AssignPayment(Guid paymentId) => PaymentId = paymentId;
+    public void AssignPayment(Guid paymentId) => TransactionId = paymentId;
 }

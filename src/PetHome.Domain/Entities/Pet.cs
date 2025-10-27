@@ -14,14 +14,14 @@ public abstract class Pet : BaseEntity
 	public Owner Owner { get; protected set; }
 	public GenderType Gender { get; protected set; }
     
-	private readonly List<Stay> _stays = new();
-	public IReadOnlyCollection<Stay> Stays => _stays.AsReadOnly();
+	private readonly List<Stay>? _stays = new();
+	public IReadOnlyCollection<Stay>? Stays => _stays.AsReadOnly();
 	public bool RequiresSpecialDiet { get; protected set; }
 
 	protected Pet() { } // EF Core
 
-	protected Pet(string name, string breed, DateTime birthDate,
-		Guid ownerId, GenderType gender, bool requiresSpecialDiet, string specialInstructions = "")
+	public Pet(string name, string breed, DateTime birthDate,
+		Guid ownerId, GenderType gender, bool requiresSpecialDiet, PetType petType, string specialInstructions = "")
 	{
 		Id = Guid.NewGuid();
 		Name = name;
@@ -30,6 +30,7 @@ public abstract class Pet : BaseEntity
 		OwnerId = ownerId;
 		SpecialInstructions = specialInstructions;
 		Gender = gender;
+		Type = petType;
 		RequiresSpecialDiet = requiresSpecialDiet;
 	}
 

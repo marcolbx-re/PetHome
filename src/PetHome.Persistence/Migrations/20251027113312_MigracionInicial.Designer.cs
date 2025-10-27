@@ -11,8 +11,8 @@ using PetHome.Persistence;
 namespace PetHome.Persistence.Migrations
 {
     [DbContext(typeof(PetHomeDbContext))]
-    [Migration("20251026094333_MyMigration")]
-    partial class MyMigration
+    [Migration("20251027113312_MigracionInicial")]
+    partial class MigracionInicial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -47,7 +47,7 @@ namespace PetHome.Persistence.Migrations
 
                     b.HasIndex("StayId");
 
-                    b.ToTable("Activities");
+                    b.ToTable("CareActivity");
                 });
 
             modelBuilder.Entity("PetHome.Domain.Owner", b =>
@@ -80,7 +80,7 @@ namespace PetHome.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("owners", (string)null);
+                    b.ToTable("Owners");
                 });
 
             modelBuilder.Entity("PetHome.Domain.Pet", b =>
@@ -149,7 +149,7 @@ namespace PetHome.Persistence.Migrations
 
                     b.HasIndex("PetId");
 
-                    b.ToTable("photos", (string)null);
+                    b.ToTable("Photo");
                 });
 
             modelBuilder.Entity("PetHome.Domain.Stay", b =>
@@ -174,9 +174,6 @@ namespace PetHome.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("PaymentId")
-                        .HasColumnType("TEXT");
-
                     b.Property<Guid>("PetId")
                         .HasColumnType("TEXT");
 
@@ -186,11 +183,14 @@ namespace PetHome.Persistence.Migrations
                     b.Property<decimal>("TotalCost")
                         .HasColumnType("TEXT");
 
+                    b.Property<Guid?>("TransactionId")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
                     b.HasIndex("PetId");
 
-                    b.ToTable("stays", (string)null);
+                    b.ToTable("Stay");
                 });
 
             modelBuilder.Entity("PetHome.Domain.Transaction", b =>
@@ -209,9 +209,6 @@ namespace PetHome.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("OwnerId")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("PaymentMethod")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -226,14 +223,36 @@ namespace PetHome.Persistence.Migrations
                     b.Property<Guid>("StayId")
                         .HasColumnType("TEXT");
 
+                    b.Property<Guid>("StayId1")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("OwnerId");
+                    b.HasIndex("StayId1");
 
-                    b.HasIndex("StayId")
-                        .IsUnique();
+                    b.ToTable("Transaction");
+                });
 
-                    b.ToTable("Transactions");
+            modelBuilder.Entity("PetHome.Persistence.Test.Person", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Age")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Persons", (string)null);
                 });
 
             modelBuilder.Entity("PetHome.Domain.Cat", b =>
@@ -285,8 +304,7 @@ namespace PetHome.Persistence.Migrations
                 {
                     b.HasOne("PetHome.Domain.Pet", "Pet")
                         .WithMany("Photos")
-                        .HasForeignKey("PetId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("PetId");
 
                     b.Navigation("Pet");
                 });
@@ -304,14 +322,10 @@ namespace PetHome.Persistence.Migrations
 
             modelBuilder.Entity("PetHome.Domain.Transaction", b =>
                 {
-                    b.HasOne("PetHome.Domain.Owner", null)
-                        .WithMany("Payments")
-                        .HasForeignKey("OwnerId");
-
                     b.HasOne("PetHome.Domain.Stay", "Stay")
-                        .WithOne("Transaction")
-                        .HasForeignKey("PetHome.Domain.Transaction", "StayId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .WithMany()
+                        .HasForeignKey("StayId1")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Stay");
@@ -319,8 +333,6 @@ namespace PetHome.Persistence.Migrations
 
             modelBuilder.Entity("PetHome.Domain.Owner", b =>
                 {
-                    b.Navigation("Payments");
-
                     b.Navigation("Pets");
                 });
 
@@ -334,9 +346,6 @@ namespace PetHome.Persistence.Migrations
             modelBuilder.Entity("PetHome.Domain.Stay", b =>
                 {
                     b.Navigation("CareActivities");
-
-                    b.Navigation("Transaction")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

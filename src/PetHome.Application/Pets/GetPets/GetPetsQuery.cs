@@ -36,7 +36,6 @@ public class GetPetsQuery
             CancellationToken cancellationToken
         )
         {
-           
             IQueryable<Pet> queryable = _context.Pets!;
 
             var predicate = ExpressionBuilder.New<Pet>();

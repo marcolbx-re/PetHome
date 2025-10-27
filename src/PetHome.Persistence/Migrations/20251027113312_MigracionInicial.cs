@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PetHome.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class MyMigration : Migration
+    public partial class MigracionInicial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "owners",
+                name: "Owners",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
@@ -25,7 +25,21 @@ namespace PetHome.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_owners", x => x.Id);
+                    table.PrimaryKey("PK_Owners", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Persons",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    FirstName = table.Column<string>(type: "TEXT", nullable: false),
+                    LastName = table.Column<string>(type: "TEXT", nullable: false),
+                    Age = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Persons", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -50,15 +64,15 @@ namespace PetHome.Persistence.Migrations
                 {
                     table.PrimaryKey("PK_Pets", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Pets_owners_OwnerId",
+                        name: "FK_Pets_Owners_OwnerId",
                         column: x => x.OwnerId,
-                        principalTable: "owners",
+                        principalTable: "Owners",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "photos",
+                name: "Photo",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
@@ -68,17 +82,16 @@ namespace PetHome.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_photos", x => x.Id);
+                    table.PrimaryKey("PK_Photo", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_photos_Pets_PetId",
+                        name: "FK_Photo_Pets_PetId",
                         column: x => x.PetId,
                         principalTable: "Pets",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "stays",
+                name: "Stay",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
@@ -90,13 +103,13 @@ namespace PetHome.Persistence.Migrations
                     TotalCost = table.Column<decimal>(type: "TEXT", nullable: false),
                     Notes = table.Column<string>(type: "TEXT", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    PaymentId = table.Column<Guid>(type: "TEXT", nullable: true)
+                    TransactionId = table.Column<Guid>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_stays", x => x.Id);
+                    table.PrimaryKey("PK_Stay", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_stays_Pets_PetId",
+                        name: "FK_Stay_Pets_PetId",
                         column: x => x.PetId,
                         principalTable: "Pets",
                         principalColumn: "Id",
@@ -104,7 +117,7 @@ namespace PetHome.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Activities",
+                name: "CareActivity",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
@@ -116,48 +129,43 @@ namespace PetHome.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Activities", x => x.Id);
+                    table.PrimaryKey("PK_CareActivity", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Activities_stays_StayId",
+                        name: "FK_CareActivity_Stay_StayId",
                         column: x => x.StayId,
-                        principalTable: "stays",
+                        principalTable: "Stay",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Transactions",
+                name: "Transaction",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     StayId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    StayId1 = table.Column<Guid>(type: "TEXT", nullable: false),
                     Amount = table.Column<decimal>(type: "TEXT", nullable: false),
                     PaymentMethod = table.Column<string>(type: "TEXT", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Status = table.Column<int>(type: "INTEGER", nullable: false),
                     Reference = table.Column<string>(type: "TEXT", nullable: false),
-                    Metadata = table.Column<string>(type: "TEXT", nullable: false),
-                    OwnerId = table.Column<Guid>(type: "TEXT", nullable: true)
+                    Metadata = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Transactions", x => x.Id);
+                    table.PrimaryKey("PK_Transaction", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Transactions_owners_OwnerId",
-                        column: x => x.OwnerId,
-                        principalTable: "owners",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Transactions_stays_StayId",
-                        column: x => x.StayId,
-                        principalTable: "stays",
+                        name: "FK_Transaction_Stay_StayId1",
+                        column: x => x.StayId1,
+                        principalTable: "Stay",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Activities_StayId",
-                table: "Activities",
+                name: "IX_CareActivity_StayId",
+                table: "CareActivity",
                 column: "StayId");
 
             migrationBuilder.CreateIndex(
@@ -166,47 +174,44 @@ namespace PetHome.Persistence.Migrations
                 column: "OwnerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_photos_PetId",
-                table: "photos",
+                name: "IX_Photo_PetId",
+                table: "Photo",
                 column: "PetId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_stays_PetId",
-                table: "stays",
+                name: "IX_Stay_PetId",
+                table: "Stay",
                 column: "PetId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Transactions_OwnerId",
-                table: "Transactions",
-                column: "OwnerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Transactions_StayId",
-                table: "Transactions",
-                column: "StayId",
-                unique: true);
+                name: "IX_Transaction_StayId1",
+                table: "Transaction",
+                column: "StayId1");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Activities");
+                name: "CareActivity");
 
             migrationBuilder.DropTable(
-                name: "photos");
+                name: "Persons");
 
             migrationBuilder.DropTable(
-                name: "Transactions");
+                name: "Photo");
 
             migrationBuilder.DropTable(
-                name: "stays");
+                name: "Transaction");
+
+            migrationBuilder.DropTable(
+                name: "Stay");
 
             migrationBuilder.DropTable(
                 name: "Pets");
 
             migrationBuilder.DropTable(
-                name: "owners");
+                name: "Owners");
         }
     }
 }

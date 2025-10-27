@@ -9,7 +9,7 @@ public class Dog : Pet
 		Guid ownerId, DogSize size, bool requiresExtraExercise, GenderType gender,
 		bool requiresSpecialDiet,
 		string specialInstructions = "")
-		: base(name, breed, birthDate, ownerId, gender,requiresSpecialDiet, specialInstructions)
+		: base(name, breed, birthDate, ownerId, gender,requiresSpecialDiet, PetType.Dog, specialInstructions)
 	{
 		Size = size;
 		RequiresExtraExercise = requiresExtraExercise;

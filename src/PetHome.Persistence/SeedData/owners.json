@@ -5,7 +5,6 @@
     "LastName": "Johnson",
     "Email": "alice.johnson@example.com",
     "PhoneNumber": "555-1234",
-    "PhotoUrl": "https://example.com/photos/alice.jpg",
     "IsNewsletterSubscribed": true,
     "CreatedAt": "2025-10-24T08:00:00Z"
   },
@@ -15,7 +14,6 @@
     "LastName": "Smith",
     "Email": "bob.smith@example.com",
     "PhoneNumber": "555-5678",
-    "PhotoUrl": "https://example.com/photos/bob.jpg",
     "IsNewsletterSubscribed": false,
     "CreatedAt": "2025-10-24T09:00:00Z"
   }

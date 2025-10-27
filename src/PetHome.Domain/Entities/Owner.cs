@@ -1,4 +1,6 @@
-﻿namespace PetHome.Domain;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace PetHome.Domain;
 
 // Domain/Entities/Owner.cs
 public class Owner : BaseEntity
@@ -10,11 +12,14 @@ public class Owner : BaseEntity
 	public bool IsNewsletterSubscribed { get; private set; }
 	public DateTime CreatedAt { get; private set; }
     
-	private readonly List<Pet> _pets = new();
-	public IReadOnlyCollection<Pet> Pets => _pets.AsReadOnly();
+	private readonly List<Pet>? _pets = new();
+	public IReadOnlyCollection<Pet>? Pets => _pets.AsReadOnly();
+	
+	[NotMapped]
     
-	private readonly List<Transaction> _payments = new();
-	public IReadOnlyCollection<Transaction> Payments => _payments.AsReadOnly();
+	private readonly List<Transaction>? _transactions = new();
+	[NotMapped]
+	public IReadOnlyCollection<Transaction>? Transactions => _transactions.AsReadOnly();
 
 	private Owner() { } // EF Core
 

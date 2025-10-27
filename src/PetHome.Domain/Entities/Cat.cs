@@ -9,7 +9,7 @@ public class Cat : Pet
 	public Cat(string name, string breed, DateTime birthDate, 
 		Guid ownerId, bool isDeclawed, bool requiresSpecialDiet, GenderType gender,
 		string specialInstructions = "")
-		: base(name, breed, birthDate, ownerId, gender, requiresSpecialDiet, specialInstructions)
+		: base(name, breed, birthDate, ownerId, gender, requiresSpecialDiet, PetType.Cat, specialInstructions)
 	{
 		IsDeclawed = isDeclawed;
 		RequiresSpecialDiet = requiresSpecialDiet;
