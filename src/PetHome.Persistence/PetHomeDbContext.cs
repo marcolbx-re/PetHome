@@ -23,14 +23,6 @@ public class PetHomeDbContext : DbContext
 	public PetHomeDbContext(DbContextOptions<PetHomeDbContext> options) : base(options)
 	{
 	}
-	
-	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-	{
-		optionsBuilder.UseSqlite("Data Source=LocalDatabase.db")
-			.EnableDetailedErrors()
-			.LogTo(Console.WriteLine, LogLevel.Information)
-			.EnableSensitiveDataLogging();
-	}
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder) //TODO agregar limite para int, VARCHAR 
 	{

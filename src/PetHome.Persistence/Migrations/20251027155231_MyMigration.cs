@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PetHome.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class MigracionInicial : Migration
+    public partial class MyMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -21,7 +21,9 @@ namespace PetHome.Persistence.Migrations
                     Email = table.Column<string>(type: "TEXT", nullable: false),
                     PhoneNumber = table.Column<string>(type: "TEXT", nullable: false),
                     IsNewsletterSubscribed = table.Column<bool>(type: "INTEGER", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    IdentificationType = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdentificationNumber = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {

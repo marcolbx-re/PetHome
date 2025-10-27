@@ -3,8 +3,9 @@ using MasterNet.Application.Core;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PetHome.Application.Core;
 using PetHome.Application.Owner.GetOwners;
-using PetHome.Application.Persons;
+using PetHome.Application.Owner.OwnerCreate;
 
 namespace PetHome.WebApi.Controllers;
 
@@ -33,6 +34,19 @@ public class OwnersController : ControllerBase
 		};
 		var resultados =  await _sender.Send(query, cancellationToken);
 		return resultados.IsSuccess ? Ok(resultados.Value) : NotFound();
+	}
+	
+	[AllowAnonymous]
+	[HttpPost]
+	[ProducesResponseType((int)HttpStatusCode.OK)]
+	public async Task<ActionResult<Result<Guid>>> OwnerCreate(
+		[FromForm] OwnerCreateRequest request,
+		CancellationToken cancellationToken
+	)
+	{
+		var command = new OwnerCreateCommand.OwnerCreateCommandRequest(request);
+		var resultado = await _sender.Send(command, cancellationToken);
+		return resultado.IsSuccess ? Ok(resultado.Value) : BadRequest();
 	}
 
 }

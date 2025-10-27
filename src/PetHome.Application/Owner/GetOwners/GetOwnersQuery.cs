@@ -40,6 +40,13 @@ public class GetOwnersQuery
             IQueryable<Domain.Owner> queryable = _context.Owners!;
 
             var predicate = ExpressionBuilder.New<Domain.Owner>();
+            
+            if(!string.IsNullOrEmpty(request.OwnerRequest!.IdentificationNumber))
+            {
+                predicate = predicate
+                    .And(y => y.IdentificationNumber!.Contains(request.OwnerRequest!.IdentificationNumber));
+            }
+            
             if(!string.IsNullOrEmpty(request.OwnerRequest!.FirstName))
             {
                 predicate = predicate
@@ -93,12 +100,16 @@ public class GetOwnersQuery
 
 public record OwnerResponse(
     Guid? Id,
-    string? Nombre,
-    string? Apellido,
-    string? Grado
+    string? FirstName,
+    string? LastName,
+    string? Email,
+    string? PhoneNumber,
+    bool IsNewsletterSubscribed,
+    string? IdentificationType,
+    string? IdentificationNumber
 )
 {
-    public OwnerResponse() : this(null, null, null, null)
+    public OwnerResponse() : this(null, null, null, null, null, false, null,null)
     {
     }
 }

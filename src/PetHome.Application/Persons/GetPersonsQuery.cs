@@ -15,9 +15,7 @@ public class GetPersonsQuery
     : IRequest<Result<PagedList<PersonResponse>>>
     {
         public GetPersonsRequest? PersonRequest {get;set;}
-
     }
-
 
     internal class GetPersonsQueryHandler
     : IRequestHandler<GetPersonsQueryRequest, Result<PagedList<PersonResponse>>>

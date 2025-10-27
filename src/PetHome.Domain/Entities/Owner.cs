@@ -2,6 +2,12 @@
 
 namespace PetHome.Domain;
 
+public enum IdentificationType
+{
+	DNI,
+	NIE
+}
+
 // Domain/Entities/Owner.cs
 public class Owner : BaseEntity
 {
@@ -11,6 +17,8 @@ public class Owner : BaseEntity
 	public string PhoneNumber { get; private set; }
 	public bool IsNewsletterSubscribed { get; private set; }
 	public DateTime CreatedAt { get; private set; }
+	public IdentificationType IdentificationType { get; set; }
+	public string IdentificationNumber { get; set; } = null!;
     
 	private readonly List<Pet>? _pets = new();
 	public IReadOnlyCollection<Pet>? Pets => _pets.AsReadOnly();
@@ -24,7 +32,7 @@ public class Owner : BaseEntity
 	private Owner() { } // EF Core
 
 	public Owner(string firstName, string lastName, string email, 
-		string phoneNumber, bool isNewsletterSubscribed)
+		string phoneNumber, bool isNewsletterSubscribed, IdentificationType identificationType, string identificationNumber)
 	{
 		Id = Guid.NewGuid();
 		FirstName = firstName;
@@ -33,6 +41,8 @@ public class Owner : BaseEntity
 		PhoneNumber = phoneNumber;
 		IsNewsletterSubscribed = isNewsletterSubscribed;
 		CreatedAt = DateTime.UtcNow;
+		IdentificationType = identificationType;
+		IdentificationNumber = identificationNumber;
 	}
 
 	public void SubscribeToNewsletter() => IsNewsletterSubscribed = true;

@@ -64,6 +64,13 @@ namespace PetHome.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("IdentificationNumber")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("IdentificationType")
+                        .HasColumnType("INTEGER");
+
                     b.Property<bool>("IsNewsletterSubscribed")
                         .HasColumnType("INTEGER");
 

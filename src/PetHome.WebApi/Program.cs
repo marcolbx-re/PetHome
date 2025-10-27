@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using PetHome.Application;
 using PetHome.Infrastructure;
 using PetHome.Persistence;
@@ -5,13 +6,21 @@ using PetHome.WebApi.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddApplication();
+Console.WriteLine("0000000000000000000");
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddIdentityServices(builder.Configuration);
 builder.Services.AddInfrastructure();
 builder.Services.AddOpenApi();
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+});
 builder.Services.AddSwaggerDocumentation();
+// builder.Services.AddSwaggerGen(c =>
+// {
+//     c.UseInlineDefinitionsForEnums(); // optional
+// });
 builder.Services.AddCors(o => o.AddPolicy("corsapp", builder =>
 {
     builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();

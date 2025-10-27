@@ -58,14 +58,18 @@ public static class DbSeeder
 				lastName: "Johnson",
 				email: "alice@example.com",
 				phoneNumber: "123-456-7890",
-				isNewsletterSubscribed: true
+				isNewsletterSubscribed: true,
+				IdentificationType.DNI,
+				"MyDNI"
 			),
 			new Owner(
 				firstName: "Bob",
 				lastName: "Smith",
 				email: "bob@example.com",
 				phoneNumber: "987-654-3210",
-				isNewsletterSubscribed: false
+				isNewsletterSubscribed: false,
+				IdentificationType.NIE,
+				"MyNIE"
 			)
 		};
 

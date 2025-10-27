@@ -11,8 +11,8 @@ using PetHome.Persistence;
 namespace PetHome.Persistence.Migrations
 {
     [DbContext(typeof(PetHomeDbContext))]
-    [Migration("20251027113312_MigracionInicial")]
-    partial class MigracionInicial
+    [Migration("20251027155231_MyMigration")]
+    partial class MyMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -66,6 +66,13 @@ namespace PetHome.Persistence.Migrations
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.Property<string>("IdentificationNumber")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("IdentificationType")
+                        .HasColumnType("INTEGER");
 
                     b.Property<bool>("IsNewsletterSubscribed")
                         .HasColumnType("INTEGER");
