@@ -4,9 +4,9 @@ using PetHome.Domain;
 
 namespace PetHome.Application.Factories;
 
-public class DogFactory : IPetFactory<DogCreationDTO, Dog>
+public class DogFactory : IPetFactory<DogCreateRequest, Dog>
 {
-	public Dog Create(DogCreationDTO dto)
+	public Dog Create(DogCreateRequest dto)
 	{
 		Dog dog = new Dog
 		(dto.Name, dto.Breed, dto.BirthDate, dto.OwnerId,

@@ -2,5 +2,5 @@
 
 public class CatCreationDTO : PetCreationDTO
 {
-	public bool IsDeclawed { get; private set; }
+	public bool IsDeclawed { get; set; }
 }

@@ -13,6 +13,7 @@ public class Dog : Pet
 	{
 		Size = size;
 		RequiresExtraExercise = requiresExtraExercise;
+		RegistrationDate = DateTime.Now;
 	}
 
 	public Dog()

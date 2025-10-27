@@ -25,7 +25,7 @@ public static class DependencyInjection
 		
 		services.AddAutoMapper(typeof(MappingProfile).Assembly);
 
-		services.AddScoped<IPetFactory<DogCreationDTO, Dog>, DogFactory>();
+		services.AddScoped<IPetFactory<DogCreateRequest, Dog>, DogFactory>();
 		services.AddScoped<IPetFactory<CatCreationDTO, Cat>, CatFactory>();
 		services.AddScoped<PetFactoryProvider>();
 

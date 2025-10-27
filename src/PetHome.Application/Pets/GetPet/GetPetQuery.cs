@@ -17,32 +17,15 @@ public class GetPetQuery
 public class PetResponse
 {
 	public Guid? Id { get; set; }
-	public string Name { get; set; } = null!;
-	public string Breed { get; set; } = null!;
-	public PetType PetType;
-	public DateTime BirthDate;
-	private DateTime RegistrationDate;
-	private string SpecialInstructions;
-	private Guid OwnerId;
-	private Domain.Owner Owner;
-	private GenderType Gender;
-	private bool RequiresSpecialDiet;
+	public string Name { get; set; }
+	public string Breed { get; set; }
+	public PetType PetType { get; set; }
+	public DateTime BirthDate { get; set; }
+	public DateTime RegistrationDate { get; set; }
+	public string SpecialInstructions { get; set; }
+	public Guid OwnerId { get; set; }
+	//public Domain.Owner Owner { get; set; }
+	public GenderType Gender { get; set; }
+	public bool RequiresSpecialDiet { get; set; }
 }
-
-// public class PetResponse(
-// 	Guid? Id ,
-// 	string Name,
-// 	string Breed,
-// 	PetType PetType,
-// 	DateTime BirthDate,
-// 	DateTime RegistrationDate,
-// 	string SpecialInstructions,
-// 	Guid OwnerId,
-// 	Domain.Owner Owner,
-// 	GenderType Gender,
-// 	bool RequiresSpecialDiet
-//
-// // private readonly List<Stay> _stays = new();
-// // public IReadOnlyCollection<Stay> Stays => _stays.AsReadOnly();
-// );
 

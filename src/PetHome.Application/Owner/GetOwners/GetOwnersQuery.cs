@@ -3,22 +3,20 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MasterNet.Application.Core;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using PetHome.Application.Core;
+using PetHome.Application.Pets.GetPet;
 using PetHome.Persistence;
-
 namespace PetHome.Application.Owner.GetOwners;
 
 public class GetOwnersQuery
 {
-
     public record GetOwnersQueryRequest
     : IRequest<Result<PagedList<OwnerResponse>>>
     {
         public GetOwnersRequest? OwnerRequest {get;set;}
-
     }
-
-
+    
     internal class GetOwnersQueryHandler
     : IRequestHandler<GetOwnersQueryRequest, Result<PagedList<OwnerResponse>>>
     {
@@ -36,9 +34,8 @@ public class GetOwnersQuery
             CancellationToken cancellationToken
         )
         {
-           
-            IQueryable<Domain.Owner> queryable = _context.Owners!;
-
+            IQueryable<Domain.Owner> queryable = _context.Owners!.
+                Include(o => o.Pets);
             var predicate = ExpressionBuilder.New<Domain.Owner>();
             
             if(!string.IsNullOrEmpty(request.OwnerRequest!.IdentificationNumber))
@@ -46,19 +43,16 @@ public class GetOwnersQuery
                 predicate = predicate
                     .And(y => y.IdentificationNumber!.Contains(request.OwnerRequest!.IdentificationNumber));
             }
-            
             if(!string.IsNullOrEmpty(request.OwnerRequest!.FirstName))
             {
                 predicate = predicate
                 .And(y => y.FirstName!.Contains(request.OwnerRequest!.FirstName));
             }
-
             if(!string.IsNullOrEmpty(request.OwnerRequest!.LastName))
             {
                 predicate = predicate
                 .And(y => y.LastName!.Contains(request.OwnerRequest!.LastName));
             }
-
             if(!string.IsNullOrEmpty(request.OwnerRequest.OrderBy))
             {
                 Expression<Func<Domain.Owner, object>>? orderBySelector = 
@@ -80,12 +74,12 @@ public class GetOwnersQuery
 
             queryable = queryable.Where(predicate);
 
-            var instructoresQuery = queryable
+            var ownersQuery = queryable
                         .ProjectTo<OwnerResponse>(_mapper.ConfigurationProvider)
                         .AsQueryable();
 
             var pagination = await PagedList<OwnerResponse>
-                .CreateAsync(instructoresQuery, 
+                .CreateAsync(ownersQuery, 
                 request.OwnerRequest.PageNumber,
                 request.OwnerRequest.PageSize
                 );
@@ -95,9 +89,6 @@ public class GetOwnersQuery
     }
 }
 
-
-
-
 public record OwnerResponse(
     Guid? Id,
     string? FirstName,
@@ -106,10 +97,10 @@ public record OwnerResponse(
     string? PhoneNumber,
     bool IsNewsletterSubscribed,
     string? IdentificationType,
-    string? IdentificationNumber
-)
+    string? IdentificationNumber,
+    List<PetResponse> Pets)
 {
-    public OwnerResponse() : this(null, null, null, null, null, false, null,null)
+    public OwnerResponse() : this(null, null, null, null, null, false, null,null,null)
     {
     }
 }

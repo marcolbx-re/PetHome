@@ -6,7 +6,6 @@ using PetHome.WebApi.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddApplication();
-Console.WriteLine("0000000000000000000");
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddIdentityServices(builder.Configuration);
 builder.Services.AddInfrastructure();
