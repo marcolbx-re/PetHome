@@ -2,23 +2,23 @@
 
 public class Pet : BaseEntity
 {
-	public string Name { get; protected set; }
-	public string Breed { get; protected set; }
-	public PetType Type { get; protected set; }
-	public DateTime BirthDate { get; protected set; }
-	public DateTime RegistrationDate { get; protected set; } 
+	public string? Name { get; set; }
+	public string? Breed { get; set; }
+	public PetType? Type { get; set; }
+	public DateTime? BirthDate { get; set; }
+	public DateTime? RegistrationDate { get; set; } 
 	public ICollection<Photo>? Photos {get;set;}
-	public string SpecialInstructions { get; protected set; }
+	public string? SpecialInstructions { get; set; }
 	//Foreign Key
-	public Guid OwnerId { get; protected set; }
-	public Owner Owner { get; protected set; }
-	public GenderType Gender { get; protected set; }
+	public Guid? OwnerId { get; set; }
+	public Owner? Owner { get; set; }
+	public GenderType? Gender { get; set; }
     
 	private readonly List<Stay>? _stays = new();
 	public IReadOnlyCollection<Stay>? Stays => _stays.AsReadOnly();
-	public bool RequiresSpecialDiet { get; protected set; }
-	public bool? IsDeclawed { get; protected set; }
-	public Size? Size { get; private set; }
+	public bool? RequiresSpecialDiet { get; set; }
+	public bool? IsDeclawed { get; set; }
+	public Size? Size { get; set; }
 
 	protected Pet() { } // EF Core
 
@@ -36,6 +36,7 @@ public class Pet : BaseEntity
 		RequiresSpecialDiet = requiresSpecialDiet;
 		IsDeclawed = isDeclawed;
 		Size = size;
+		RegistrationDate = DateTime.Now;
 	}
 
 	public string GetPetType()

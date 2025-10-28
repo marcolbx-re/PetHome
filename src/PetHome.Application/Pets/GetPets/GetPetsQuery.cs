@@ -15,13 +15,13 @@ namespace PetHome.Application.Pets.GetPets;
 public class GetPetsQuery
 {
 	public record GetPetsQueryRequest
-		: IRequest<Result<PagedList<PetDTO>>>
+		: IRequest<Result<PagedList<PetSimpleResponse>>>
 	{
 		public GetPetRequest? PetRequest {get;set;}
 	}
 	
 	internal class GetPetsQueryHandler
-    : IRequestHandler<GetPetsQueryRequest, Result<PagedList<PetDTO>>>
+    : IRequestHandler<GetPetsQueryRequest, Result<PagedList<PetSimpleResponse>>>
     {
         private readonly PetHomeDbContext _context;
         private readonly IMapper _mapper;
@@ -32,7 +32,7 @@ public class GetPetsQuery
             _mapper = mapper;
         }
 
-        public async Task<Result<PagedList<PetDTO>>> Handle(
+        public async Task<Result<PagedList<PetSimpleResponse>>> Handle(
             GetPetsQueryRequest request, 
             CancellationToken cancellationToken
         )
@@ -74,16 +74,16 @@ public class GetPetsQuery
             queryable = queryable.Where(predicate);
 
             var petsQuery = queryable
-                        .ProjectTo<PetDTO>(_mapper.ConfigurationProvider)
+                        .ProjectTo<PetSimpleResponse>(_mapper.ConfigurationProvider)
                         .AsQueryable();
 
-            var pagination = await PagedList<PetDTO>
+            var pagination = await PagedList<PetSimpleResponse>
                 .CreateAsync(petsQuery, 
                 request.PetRequest.PageNumber,
                 request.PetRequest.PageSize
                 );
 
-            return Result<PagedList<PetDTO>>.Success(pagination);
+            return Result<PagedList<PetSimpleResponse>>.Success(pagination);
         }
     }
 }

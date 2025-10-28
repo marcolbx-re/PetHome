@@ -27,8 +27,4 @@
       </Reference>
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Pets\UpdatePet\" />
-    </ItemGroup>
-
 </Project>

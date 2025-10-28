@@ -8,6 +8,7 @@ using PetHome.Application.DTOs;
 using PetHome.Application.Pets.DeletePet;
 using PetHome.Application.Pets.GetPet;
 using PetHome.Application.Pets.GetPets;
+using PetHome.Application.Pets.UpdatePet;
 
 namespace PetHome.WebApi.Controllers;
 
@@ -34,7 +35,7 @@ public class PetsController : ControllerBase
 		var query = new GetPetsQuery.GetPetsQueryRequest {
 			PetRequest = request
 		};
-		Result<PagedList<PetDTO>> result =  await _sender.Send(query, cancellationToken);
+		Result<PagedList<PetSimpleResponse>> result =  await _sender.Send(query, cancellationToken);
 		return result.IsSuccess ? Ok(result.Value) : NotFound();
 	}
 	
@@ -61,6 +62,19 @@ public class PetsController : ControllerBase
 	{
 		var query = new GetPetQuery.GetPetQueryRequest{ Id = id };
 		var result = await _sender.Send(query, cancellationToken);
+		return result.IsSuccess ? Ok(result.Value) : BadRequest();
+	}
+	
+	[HttpPut("{id}")]
+	[ProducesResponseType((int)HttpStatusCode.OK)]
+	public async Task<ActionResult<Result<Guid>>> CursoUpdate(
+		[FromBody] PetUpdateRequest request,
+		Guid id,
+		CancellationToken cancellationToken
+	)
+	{
+		var command = new PetUpdateCommand.PetUpdateCommandRequest(request, id);
+		var result = await _sender.Send(command, cancellationToken);
 		return result.IsSuccess ? Ok(result.Value) : BadRequest();
 	}
 	
