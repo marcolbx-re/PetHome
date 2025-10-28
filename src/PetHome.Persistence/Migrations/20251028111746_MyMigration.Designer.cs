@@ -11,7 +11,7 @@ using PetHome.Persistence;
 namespace PetHome.Persistence.Migrations
 {
     [DbContext(typeof(PetHomeDbContext))]
-    [Migration("20251027155231_MyMigration")]
+    [Migration("20251028111746_MyMigration")]
     partial class MyMigration
     {
         /// <inheritdoc />
@@ -60,15 +60,12 @@ namespace PetHome.Persistence.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("IdentificationNumber")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int>("IdentificationType")
@@ -78,11 +75,9 @@ namespace PetHome.Persistence.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -106,6 +101,9 @@ namespace PetHome.Persistence.Migrations
                     b.Property<int>("Gender")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool?>("IsDeclawed")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -117,6 +115,9 @@ namespace PetHome.Persistence.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("RequiresSpecialDiet")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("Size")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("SpecialInstructions")
@@ -131,10 +132,6 @@ namespace PetHome.Persistence.Migrations
                     b.HasIndex("OwnerId");
 
                     b.ToTable("Pets");
-
-                    b.HasDiscriminator<int>("Type");
-
-                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("PetHome.Domain.Photo", b =>
@@ -238,51 +235,6 @@ namespace PetHome.Persistence.Migrations
                     b.HasIndex("StayId1");
 
                     b.ToTable("Transaction");
-                });
-
-            modelBuilder.Entity("PetHome.Persistence.Test.Person", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Age")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Persons", (string)null);
-                });
-
-            modelBuilder.Entity("PetHome.Domain.Cat", b =>
-                {
-                    b.HasBaseType("PetHome.Domain.Pet");
-
-                    b.Property<bool>("IsDeclawed")
-                        .HasColumnType("INTEGER");
-
-                    b.HasDiscriminator().HasValue(2);
-                });
-
-            modelBuilder.Entity("PetHome.Domain.Dog", b =>
-                {
-                    b.HasBaseType("PetHome.Domain.Pet");
-
-                    b.Property<bool>("RequiresExtraExercise")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Size")
-                        .HasColumnType("INTEGER");
-
-                    b.HasDiscriminator().HasValue(1);
                 });
 
             modelBuilder.Entity("PetHome.Domain.CareActivity", b =>

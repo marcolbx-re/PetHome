@@ -5,8 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PetHome.Application.Core;
 using PetHome.Application.DTOs;
-using PetHome.Application.DTOs.CreateDog;
-using PetHome.Application.Owner.OwnerCreate;
+using PetHome.Application.Pets.DeletePet;
 using PetHome.Application.Pets.GetPet;
 using PetHome.Application.Pets.GetPets;
 
@@ -26,7 +25,7 @@ public class PetsController : ControllerBase
 	[AllowAnonymous]
 	[HttpGet]
 	[ProducesResponseType((int)HttpStatusCode.OK)]
-	public async Task<ActionResult<PagedList<PetResponse>>> PaginationPet
+	public async Task<ActionResult<PagedList<PetDTO>>> PaginationPet
 	(
 		[FromQuery] GetPetRequest request,
 		CancellationToken cancellationToken
@@ -35,20 +34,45 @@ public class PetsController : ControllerBase
 		var query = new GetPetsQuery.GetPetsQueryRequest {
 			PetRequest = request
 		};
-		Result<PagedList<PetResponse>> resultados =  await _sender.Send(query, cancellationToken);
-		return resultados.IsSuccess ? Ok(resultados.Value) : NotFound();
+		Result<PagedList<PetDTO>> result =  await _sender.Send(query, cancellationToken);
+		return result.IsSuccess ? Ok(result.Value) : NotFound();
 	}
 	
 	[AllowAnonymous]
-	[HttpPost("dogs")]
+	[HttpPost]
 	[ProducesResponseType((int)HttpStatusCode.OK)]
-	public async Task<ActionResult<Result<Guid>>> DogCreate(
-		[FromForm] DogCreateRequest request,
+	public async Task<ActionResult<Result<Guid>>> CatCreate(
+		[FromForm] PetCreateRequest request,
 		CancellationToken cancellationToken
 	)
 	{
-		var command = new DogCreateCommand.DogCreateCommandRequest(request);
-		var resultado = await _sender.Send(command, cancellationToken);
-		return resultado.IsSuccess ? Ok(resultado.Value) : BadRequest();
+		var command = new PetCreateCommand.PetCreateCommandRequest(request);
+		var result = await _sender.Send(command, cancellationToken);
+		return result.IsSuccess ? Ok(result.Value) : BadRequest();
+	}
+	
+	[AllowAnonymous]
+	[HttpGet("{id}")]
+	[ProducesResponseType((int)HttpStatusCode.OK)]
+	public async Task<ActionResult<CatDTO>> CursoGet(
+		Guid id,
+		CancellationToken cancellationToken
+	)
+	{
+		var query = new GetPetQuery.GetPetQueryRequest{ Id = id };
+		var result = await _sender.Send(query, cancellationToken);
+		return result.IsSuccess ? Ok(result.Value) : BadRequest();
+	}
+	
+	[HttpDelete("{id}")]
+	[ProducesResponseType((int)HttpStatusCode.OK)]
+	public async Task<ActionResult<Unit>> OwnerDelete(
+		Guid id,
+		CancellationToken cancellationToken
+	)
+	{
+		var command = new PetDeleteCommand.PetDeleteCommandRequest(id);
+		var result = await _sender.Send(command, cancellationToken);
+		return result.IsSuccess ? Ok() : BadRequest();
 	}
 }

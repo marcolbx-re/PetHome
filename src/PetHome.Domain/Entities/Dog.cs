@@ -2,14 +2,14 @@
 
 public class Dog : Pet
 {
-	public DogSize Size { get; private set; }
+	public Size Size { get; private set; }
 	public bool RequiresExtraExercise { get; private set; }
 	
 	public Dog(string name, string breed, DateTime birthDate, 
-		Guid ownerId, DogSize size, bool requiresExtraExercise, GenderType gender,
+		Guid ownerId, Size size, bool requiresExtraExercise, GenderType gender,
 		bool requiresSpecialDiet,
 		string specialInstructions = "")
-		: base(name, breed, birthDate, ownerId, gender,requiresSpecialDiet, PetType.Dog, specialInstructions)
+		: base(name, breed, birthDate, ownerId, gender,requiresSpecialDiet, PetType.Dog, false, size, specialInstructions)
 	{
 		Size = size;
 		RequiresExtraExercise = requiresExtraExercise;
@@ -20,16 +20,14 @@ public class Dog : Pet
 	{
 		
 	}
-
-	public override string GetPetType() => "Dog";
-
+	
 	public override decimal GetDailyRate()
 	{
 		decimal baseRate = Size switch
 		{
-			DogSize.Small => 30.00m,
-			DogSize.Medium => 40.00m,
-			DogSize.Large => 50.00m,
+			Size.Small => 30.00m,
+			Size.Medium => 40.00m,
+			Size.Large => 50.00m,
 			_ => 40.00m
 		};
 
@@ -39,7 +37,7 @@ public class Dog : Pet
 	
 }
 
-public enum DogSize
+public enum Size
 {
 	Small,
 	Medium,

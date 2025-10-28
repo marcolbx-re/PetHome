@@ -4,6 +4,7 @@ using AutoMapper.QueryableExtensions;
 using MasterNet.Application.Core;
 using MediatR;
 using PetHome.Application.Core;
+using PetHome.Application.DTOs;
 using PetHome.Application.Pets.GetPet;
 using PetHome.Domain;
 using PetHome.Persistence;
@@ -14,13 +15,13 @@ namespace PetHome.Application.Pets.GetPets;
 public class GetPetsQuery
 {
 	public record GetPetsQueryRequest
-		: IRequest<Result<PagedList<PetResponse>>>
+		: IRequest<Result<PagedList<PetDTO>>>
 	{
 		public GetPetRequest? PetRequest {get;set;}
 	}
 	
 	internal class GetPetsQueryHandler
-    : IRequestHandler<GetPetsQueryRequest, Result<PagedList<PetResponse>>>
+    : IRequestHandler<GetPetsQueryRequest, Result<PagedList<PetDTO>>>
     {
         private readonly PetHomeDbContext _context;
         private readonly IMapper _mapper;
@@ -31,7 +32,7 @@ public class GetPetsQuery
             _mapper = mapper;
         }
 
-        public async Task<Result<PagedList<PetResponse>>> Handle(
+        public async Task<Result<PagedList<PetDTO>>> Handle(
             GetPetsQueryRequest request, 
             CancellationToken cancellationToken
         )
@@ -73,16 +74,16 @@ public class GetPetsQuery
             queryable = queryable.Where(predicate);
 
             var petsQuery = queryable
-                        .ProjectTo<PetResponse>(_mapper.ConfigurationProvider)
+                        .ProjectTo<PetDTO>(_mapper.ConfigurationProvider)
                         .AsQueryable();
 
-            var pagination = await PagedList<PetResponse>
+            var pagination = await PagedList<PetDTO>
                 .CreateAsync(petsQuery, 
                 request.PetRequest.PageNumber,
                 request.PetRequest.PageSize
                 );
 
-            return Result<PagedList<PetResponse>>.Success(pagination);
+            return Result<PagedList<PetDTO>>.Success(pagination);
         }
     }
 }

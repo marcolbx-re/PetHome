@@ -36,39 +36,4 @@ public static class DependencyInjection
 
 		return services;
 	}
-	
-	// public static IServiceCollection AddPersistence(
-	// 	this IServiceCollection services,
-	// 	IConfiguration configuration
-	// )
-	// {
-	// 	Console.WriteLine("dddddddddddddddddddddd");
-	// 	services.AddDbContext<PetHomeDbContext>(opt =>
-	// 	{
-	// 		Console.WriteLine("11111111111111111111");
-	// 		opt.LogTo(Console.WriteLine, new[] {
-	// 			DbLoggerCategory.Database.Command.Name
-	// 		}, LogLevel.Information).EnableSensitiveDataLogging();
-	//
-	// 		Console.WriteLine("zxsssssssssssssssssssssssssssssssssssss");
-	// 		opt.UseSqlite(configuration.GetConnectionString("SqliteDatabase"))
-	// 			.UseAsyncSeeding(async (context, status, cancellationToken) =>
-	// 			{
-	// 				Console.WriteLine("sssssssssssss");
-	// 				var dbContext = (PetHomeDbContext)context;
-	// 				var logger = context.GetService<ILogger<PetHomeDbContext>>();
-	// 				try
-	// 				{
-	// 					await DbSeeder.SeedPersonsAsync(dbContext, logger, cancellationToken);
-	// 				}
-	// 				catch (Exception e)
-	// 				{
-	// 					Console.WriteLine(e);
-	// 					throw;
-	// 				}
-	// 			});
-	// 	});
-	//
-	// 	return services;
-	// }
 }

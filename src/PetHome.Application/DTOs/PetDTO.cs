@@ -2,15 +2,20 @@
 
 namespace PetHome.Application.DTOs;
 
-public abstract record PetDTO
+public record PetDTO
 {
-	public string Name { get; protected set; }
-	public string Breed { get; protected set; }
-	public DateTime BirthDate { get; protected set; }
-	public ICollection<Photo>? Photos {get;set;}
-	public string SpecialInstructions { get; protected set; }
-	public Guid OwnerId { get; protected set; }
-	public Domain.Owner Owner { get; protected set; }
-	public GenderType Gender { get; protected set; }
-	public bool RequiresSpecialDiet { get; protected set; }
+	public Guid? Id { get; set; }
+	public string? Name { get; set; }
+	public string? Breed { get; set; }
+	public string? PetType { get; set; }
+	public DateTime? BirthDate { get; set; }
+	public DateTime? RegistrationDate { get; set; }
+	public string? SpecialInstructions { get; set; }
+	public Guid? OwnerId { get; set; }
+	public GenderType? Gender { get; set; }
+	public PetType? Type { get; set; }
+	public bool? RequiresSpecialDiet { get; set; }
+	public ICollection<Photo>? Photos {get; set;}
+	public bool? IsDeclawed { get; set; }
+	public Size? Size { get; set; }
 }

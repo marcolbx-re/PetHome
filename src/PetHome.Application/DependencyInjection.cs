@@ -1,10 +1,6 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using PetHome.Application.Core;
-using PetHome.Application.DTOs;
-using PetHome.Application.Factories;
-using PetHome.Application.Interfaces;
-using PetHome.Domain;
 
 namespace PetHome.Application;
 
@@ -24,10 +20,6 @@ public static class DependencyInjection
 		services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly);
 		
 		services.AddAutoMapper(typeof(MappingProfile).Assembly);
-
-		services.AddScoped<IPetFactory<DogCreateRequest, Dog>, DogFactory>();
-		services.AddScoped<IPetFactory<CatCreationDTO, Cat>, CatFactory>();
-		services.AddScoped<PetFactoryProvider>();
 
 		return services;
 	}

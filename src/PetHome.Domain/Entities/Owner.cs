@@ -11,14 +11,14 @@ public enum IdentificationType
 // Domain/Entities/Owner.cs
 public class Owner : BaseEntity
 {
-	public string FirstName { get; private set; }
-	public string LastName { get; private set; }
-	public string Email { get; private set; }
-	public string PhoneNumber { get; private set; }
-	public bool IsNewsletterSubscribed { get; private set; }
-	public DateTime CreatedAt { get; private set; }
+	public string? FirstName { get; set; }
+	public string? LastName { get; set; }
+	public string? Email { get; set; }
+	public string? PhoneNumber { get; set; }
+	public bool IsNewsletterSubscribed { get; set; }
+	public DateTime CreatedAt { get; set; }
 	public IdentificationType IdentificationType { get; set; }
-	public string IdentificationNumber { get; set; } = null!;
+	public string? IdentificationNumber { get; set; } = null!;
     
 	private readonly List<Pet>? _pets = new();
 	public IReadOnlyCollection<Pet>? Pets => _pets.AsReadOnly();

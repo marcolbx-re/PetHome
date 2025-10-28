@@ -1,6 +1,6 @@
 ﻿namespace PetHome.Domain;
 
-public abstract class Pet : BaseEntity
+public class Pet : BaseEntity
 {
 	public string Name { get; protected set; }
 	public string Breed { get; protected set; }
@@ -17,11 +17,13 @@ public abstract class Pet : BaseEntity
 	private readonly List<Stay>? _stays = new();
 	public IReadOnlyCollection<Stay>? Stays => _stays.AsReadOnly();
 	public bool RequiresSpecialDiet { get; protected set; }
+	public bool? IsDeclawed { get; protected set; }
+	public Size? Size { get; private set; }
 
 	protected Pet() { } // EF Core
 
 	public Pet(string name, string breed, DateTime birthDate,
-		Guid ownerId, GenderType gender, bool requiresSpecialDiet, PetType petType, string specialInstructions = "")
+		Guid ownerId, GenderType gender, bool requiresSpecialDiet, PetType petType, bool isDeclawed,Size size, string specialInstructions = "" )
 	{
 		Id = Guid.NewGuid();
 		Name = name;
@@ -32,10 +34,18 @@ public abstract class Pet : BaseEntity
 		Gender = gender;
 		Type = petType;
 		RequiresSpecialDiet = requiresSpecialDiet;
+		IsDeclawed = isDeclawed;
+		Size = size;
 	}
 
-	public abstract string GetPetType();
-	public abstract decimal GetDailyRate();
+	public string GetPetType()
+	{
+		return Type.ToString();
+	}
+	public virtual decimal GetDailyRate()
+	{
+		return 0;
+	}
 }
 public enum GenderType
 {
@@ -45,6 +55,7 @@ public enum GenderType
 
 public enum PetType
 {
+	None = 0,
 	Dog = 1,
 	Cat = 2,
 }

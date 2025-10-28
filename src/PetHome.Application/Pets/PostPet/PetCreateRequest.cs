@@ -2,7 +2,7 @@
 
 namespace PetHome.Application.DTOs;
 
-public abstract class PetCreationDTO
+public class PetCreateRequest
 {
 	public string Name { get; set; }
 	public string Breed { get; set; }
@@ -10,7 +10,10 @@ public abstract class PetCreationDTO
 	//public ICollection<Photo>? Photos {get;set;}
 	public string SpecialInstructions { get; set; }
 	public GenderType Gender { get; set; }
+	public PetType Type { get; set; }
 	public bool RequiresSpecialDiet { get; set; }
 	public Guid OwnerId { get; set; }
-	
+	public bool IsDeclawed { get; set; }
+	public Size Size { get; set; }
+	public bool RequiresExtraExercise { get; set; }
 }

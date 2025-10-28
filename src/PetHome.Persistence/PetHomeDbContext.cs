@@ -9,7 +9,6 @@ namespace PetHome.Persistence;
 
 public class PetHomeDbContext : DbContext
 {
-	public DbSet<Person> Persons { get; set; }
 	public DbSet<Owner>? Owners {get;set;}
 	public DbSet<Pet>? Pets {get;set;}
 	// public DbSet<Transaction>? Transactions {get;set;}
@@ -27,19 +26,13 @@ public class PetHomeDbContext : DbContext
 	protected override void OnModelCreating(ModelBuilder modelBuilder) //TODO agregar limite para int, VARCHAR 
 	{
 		base.OnModelCreating(modelBuilder);
-		// modelBuilder.Entity<Owner>().ToTable("owners");
-		// modelBuilder.Entity<Stay>().ToTable("stays");
-		// modelBuilder.Entity<Photo>().ToTable("photos");
-		
-		modelBuilder.Entity<Person>()
-			.ToTable("Persons"); // match the exact table name in the database
 		
 		modelBuilder.Entity<Owner>()
 			.HasMany(o => o.Pets)
 			.WithOne(p => p.Owner)
 			.HasForeignKey(p => p.OwnerId)
 			.OnDelete(DeleteBehavior.Restrict);
-	
+		
 		modelBuilder.Entity<Pet>()
 			.HasMany(p => p.Stays)
 			.WithOne(s => s.Pet)
@@ -70,9 +63,6 @@ public class PetHomeDbContext : DbContext
 				v => JsonSerializer.Serialize(v, (JsonSerializerOptions?)null),
 				v => JsonSerializer.Deserialize<Dictionary<string, string>>(v, (JsonSerializerOptions?)null)!);
 		
-		modelBuilder.Entity<Pet>()
-			.HasDiscriminator<PetType>(nameof(Pet.Type))
-			.HasValue<Dog>(PetType.Dog)
-			.HasValue<Cat>(PetType.Cat);
+		
 	}
 }

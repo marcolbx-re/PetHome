@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 
-namespace PetHome.Application.Owner.OwnerCreate;
+namespace PetHome.Application.Owner.UpdateOwner;
 
-public class OwnerCreateValidator : AbstractValidator<OwnerCreateRequest>
+public class OwnerUpdateValidator: AbstractValidator<OwnerUpdateRequest>
 {
-	public OwnerCreateValidator()
+	public OwnerUpdateValidator()
 	{
 		RuleFor(x => x.FirstName).NotEmpty()
 			.WithMessage("El nombre esta en blanco");

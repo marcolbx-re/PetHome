@@ -5,6 +5,7 @@ using MasterNet.Application.Core;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using PetHome.Application.Core;
+using PetHome.Application.DTOs;
 using PetHome.Application.Pets.GetPet;
 using PetHome.Persistence;
 namespace PetHome.Application.Owner.GetOwners;
@@ -98,7 +99,7 @@ public record OwnerResponse(
     bool IsNewsletterSubscribed,
     string? IdentificationType,
     string? IdentificationNumber,
-    List<PetResponse> Pets)
+    List<PetSimpleResponse> Pets)
 {
     public OwnerResponse() : this(null, null, null, null, null, false, null,null,null)
     {

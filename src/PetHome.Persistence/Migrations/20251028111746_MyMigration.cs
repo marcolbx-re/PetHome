@@ -16,32 +16,18 @@ namespace PetHome.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    FirstName = table.Column<string>(type: "TEXT", nullable: false),
-                    LastName = table.Column<string>(type: "TEXT", nullable: false),
-                    Email = table.Column<string>(type: "TEXT", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "TEXT", nullable: false),
+                    FirstName = table.Column<string>(type: "TEXT", nullable: true),
+                    LastName = table.Column<string>(type: "TEXT", nullable: true),
+                    Email = table.Column<string>(type: "TEXT", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "TEXT", nullable: true),
                     IsNewsletterSubscribed = table.Column<bool>(type: "INTEGER", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
                     IdentificationType = table.Column<int>(type: "INTEGER", nullable: false),
-                    IdentificationNumber = table.Column<string>(type: "TEXT", nullable: false)
+                    IdentificationNumber = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Owners", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Persons",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    FirstName = table.Column<string>(type: "TEXT", nullable: false),
-                    LastName = table.Column<string>(type: "TEXT", nullable: false),
-                    Age = table.Column<int>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Persons", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -59,8 +45,7 @@ namespace PetHome.Persistence.Migrations
                     Gender = table.Column<int>(type: "INTEGER", nullable: false),
                     RequiresSpecialDiet = table.Column<bool>(type: "INTEGER", nullable: false),
                     IsDeclawed = table.Column<bool>(type: "INTEGER", nullable: true),
-                    Size = table.Column<int>(type: "INTEGER", nullable: true),
-                    RequiresExtraExercise = table.Column<bool>(type: "INTEGER", nullable: true)
+                    Size = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -196,9 +181,6 @@ namespace PetHome.Persistence.Migrations
         {
             migrationBuilder.DropTable(
                 name: "CareActivity");
-
-            migrationBuilder.DropTable(
-                name: "Persons");
 
             migrationBuilder.DropTable(
                 name: "Photo");

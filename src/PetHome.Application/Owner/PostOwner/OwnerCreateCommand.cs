@@ -44,7 +44,7 @@ public class OwnerCreateCommand
     {
         public OwnerCreateCommandRequestValidator()
         {
-            //RuleFor(x => x.ownerCreateDTO).SetValidator(new OwnerCreateValidator());
+            RuleFor(x => x.OwnerCreateRequest).SetValidator(new OwnerCreateValidator());
         }
 
     }
