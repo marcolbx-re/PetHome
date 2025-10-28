@@ -13,5 +13,3 @@ This project demonstrates modern backend development practices with a focus on c
 - **AutoMapper** – for mapping between entities and DTOs  
 - **Authentication & Security** – JWT-based authentication, role-based authorization, and secure endpoints  
 ---
-
-# PetHome
