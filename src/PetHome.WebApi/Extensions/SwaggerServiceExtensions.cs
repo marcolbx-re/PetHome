@@ -3,10 +3,7 @@ using Microsoft.OpenApi.Models;
 
 public static class SwaggerServiceExtensions
 {
-	public static IServiceCollection AddSwaggerDocumentation
-	(
-		this IServiceCollection services
-	)
+	public static IServiceCollection AddSwaggerDocumentation(this IServiceCollection services)
 	{
 		services.AddEndpointsApiExplorer();
 		services.AddSwaggerGen(c => {
@@ -31,25 +28,16 @@ public static class SwaggerServiceExtensions
 					securitySchema, new [] {"Bearer"}
 				}
 			};         
-
 			c.AddSecurityRequirement(securityRequirement);
-
 		});
-
-
+		
 		return services;
 	}
 
-	public static IApplicationBuilder useSwaggerDocumentation(
-		this IApplicationBuilder app
-	)
+	public static IApplicationBuilder UseSwaggerDocumentation(this IApplicationBuilder app)
 	{
-
 		app.UseSwagger();
 		app.UseSwaggerUI();
-        
 		return app;
 	}
-
-
 }

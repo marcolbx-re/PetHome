@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using PetHome.Domain;
 
 namespace PetHome.Persistence.Test;
@@ -54,18 +53,6 @@ public static class DbSeeder
 
 		foreach (var owner in owners)
 		{
-			// Example pet 1
-			var pet1 = new Dog(
-				name: "Fido",
-				breed: "Labrador",
-				birthDate: new DateTime(2020, 5, 10),
-				ownerId: owner.Id,
-				specialInstructions: "No chocolate",
-				gender: GenderType.Male,
-				requiresSpecialDiet: true,
-				size: Size.Medium,
-				requiresExtraExercise: false
-			);
 
 			// Example pet 2
 			var pet2 = new Pet(
@@ -81,7 +68,6 @@ public static class DbSeeder
 				size: Size.Small
 			);
 
-			pets.Add(pet1);
 			pets.Add(pet2);
 		}
 

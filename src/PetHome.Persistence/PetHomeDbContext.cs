@@ -1,13 +1,13 @@
 ﻿using System.Text.Json;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.Extensions.Logging;
 using PetHome.Domain;
-using PetHome.Persistence.Test;
+using PetHome.Persistence.Models;
 
 namespace PetHome.Persistence;
 
-public class PetHomeDbContext : DbContext
+public class PetHomeDbContext : IdentityDbContext<AppUser>
 {
 	public DbSet<Owner>? Owners {get;set;}
 	public DbSet<Pet>? Pets {get;set;}
@@ -62,7 +62,87 @@ public class PetHomeDbContext : DbContext
 			.HasConversion(
 				v => JsonSerializer.Serialize(v, (JsonSerializerOptions?)null),
 				v => JsonSerializer.Deserialize<Dictionary<string, string>>(v, (JsonSerializerOptions?)null)!);
-		
-		
+
+		LoadSecurityData(modelBuilder);
 	}
+	
+	private void LoadSecurityData(ModelBuilder modelBuilder)
+    {
+        var adminId = Guid.NewGuid().ToString();
+        var clientId = Guid.NewGuid().ToString();
+
+        modelBuilder.Entity<IdentityRole>().HasData(
+            new IdentityRole {
+                Id = adminId,
+                Name = CustomRoles.ADMIN,
+                NormalizedName = CustomRoles.ADMIN
+            }
+        );
+
+        modelBuilder.Entity<IdentityRole>().HasData(
+            new IdentityRole {
+                Id = clientId,
+                Name = CustomRoles.CLIENT,
+                NormalizedName = CustomRoles.CLIENT
+            }
+        );
+    
+        modelBuilder.Entity<IdentityRoleClaim<string>>()
+        .HasData(
+            new IdentityRoleClaim<string>{
+                Id = 1,
+                ClaimType=CustomClaims.POLICIES,
+                ClaimValue = PolicyMaster.OWNER_READ,
+                RoleId = adminId
+            },
+             new IdentityRoleClaim<string>{
+                Id = 2,
+                ClaimType=CustomClaims.POLICIES,
+                ClaimValue = PolicyMaster.OWNER_UPDATE,
+                RoleId = adminId
+            },
+             new IdentityRoleClaim<string>{
+                Id = 3,
+                ClaimType=CustomClaims.POLICIES,
+                ClaimValue = PolicyMaster.OWNER_CREATE,
+                RoleId = adminId
+            },
+             new IdentityRoleClaim<string>{
+                Id = 4,
+                ClaimType=CustomClaims.POLICIES,
+                ClaimValue = PolicyMaster.OWNER_DELETE,
+                RoleId = adminId
+            },
+             new IdentityRoleClaim<string>{
+                Id = 5,
+                ClaimType=CustomClaims.POLICIES,
+                ClaimValue = PolicyMaster.PET_CREATE,
+                RoleId = adminId
+            },
+             new IdentityRoleClaim<string>{
+                Id = 6,
+                ClaimType=CustomClaims.POLICIES,
+                ClaimValue = PolicyMaster.PET_READ,
+                RoleId = adminId
+            },
+             new IdentityRoleClaim<string>{
+                Id = 7,
+                ClaimType=CustomClaims.POLICIES,
+                ClaimValue = PolicyMaster.PET_UPDATE,
+                RoleId = adminId
+            },
+            new IdentityRoleClaim<string>{
+                Id = 8,
+                ClaimType=CustomClaims.POLICIES,
+                ClaimValue = PolicyMaster.OWNER_READ,
+                RoleId = clientId
+            },
+            new IdentityRoleClaim<string>{
+                Id = 9,
+                ClaimType=CustomClaims.POLICIES,
+                ClaimValue = PolicyMaster.PET_READ,
+                RoleId = clientId
+            }
+        );
+    }
 }

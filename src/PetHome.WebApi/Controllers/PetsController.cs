@@ -9,6 +9,7 @@ using PetHome.Application.Pets.DeletePet;
 using PetHome.Application.Pets.GetPet;
 using PetHome.Application.Pets.GetPets;
 using PetHome.Application.Pets.UpdatePet;
+using PetHome.Domain;
 
 namespace PetHome.WebApi.Controllers;
 
@@ -39,7 +40,7 @@ public class PetsController : ControllerBase
 		return result.IsSuccess ? Ok(result.Value) : NotFound();
 	}
 	
-	[AllowAnonymous]
+	[Authorize(Policy = PolicyMaster.PET_CREATE)]
 	[HttpPost]
 	[ProducesResponseType((int)HttpStatusCode.OK)]
 	public async Task<ActionResult<Result<Guid>>> CatCreate(
@@ -65,6 +66,7 @@ public class PetsController : ControllerBase
 		return result.IsSuccess ? Ok(result.Value) : BadRequest();
 	}
 	
+	[Authorize(Policy = PolicyMaster.PET_UPDATE)]
 	[HttpPut("{id}")]
 	[ProducesResponseType((int)HttpStatusCode.OK)]
 	public async Task<ActionResult<Result<Guid>>> CursoUpdate(
@@ -78,6 +80,7 @@ public class PetsController : ControllerBase
 		return result.IsSuccess ? Ok(result.Value) : BadRequest();
 	}
 	
+	[Authorize(Policy = PolicyMaster.PET_DELETE)]
 	[HttpDelete("{id}")]
 	[ProducesResponseType((int)HttpStatusCode.OK)]
 	public async Task<ActionResult<Unit>> OwnerDelete(

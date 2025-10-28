@@ -9,6 +9,7 @@ using PetHome.Application.Owner.GetOwner;
 using PetHome.Application.Owner.GetOwners;
 using PetHome.Application.Owner.OwnerCreate;
 using PetHome.Application.Owner.UpdateOwner;
+using PetHome.Domain;
 using OwnerResponse = PetHome.Application.Owner.GetOwners.OwnerResponse;
 
 namespace PetHome.WebApi.Controllers;
@@ -53,7 +54,7 @@ public class OwnersController : ControllerBase
 		return result.IsSuccess ? Ok(result.Value) : BadRequest();
 	}
 	
-	[AllowAnonymous]
+	[Authorize(Policy = PolicyMaster.OWNER_CREATE)]
 	[HttpPost]
 	[ProducesResponseType((int)HttpStatusCode.OK)]
 	public async Task<ActionResult<Result<Guid>>> OwnerCreate(
@@ -66,6 +67,7 @@ public class OwnersController : ControllerBase
 		return result.IsSuccess ? Ok(result.Value) : BadRequest();
 	}
 	
+	[Authorize(Policy = PolicyMaster.OWNER_UPDATE)]
 	[HttpPut("{id}")]
 	[ProducesResponseType((int)HttpStatusCode.OK)]
 	public async Task<ActionResult<Result<Guid>>> CursoUpdate(
@@ -79,6 +81,7 @@ public class OwnersController : ControllerBase
 		return result.IsSuccess ? Ok(result.Value) : BadRequest();
 	}
 	
+	[Authorize(Policy = PolicyMaster.OWNER_DELETE)]
 	[HttpDelete("{id}")]
 	[ProducesResponseType((int)HttpStatusCode.OK)]
 	public async Task<ActionResult<Unit>> OwnerDelete(
