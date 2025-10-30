@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using PetHome.Domain;
 using PetHome.Persistence;
 using PetHome.Persistence.Models;

@@ -34,6 +34,7 @@ public class GetPetQuery
 		)
 		{
 			var pet = await _context.Pets!.Where(x => x.Id == request.Id)
+				.Include(x => x.Photos)
 				.ProjectTo<PetDTO>(_mapper.ConfigurationProvider)
 				.FirstOrDefaultAsync(cancellationToken: cancellationToken);
 

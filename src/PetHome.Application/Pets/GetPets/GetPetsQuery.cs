@@ -3,6 +3,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using PetHome.Application.Core;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using PetHome.Application.Pets.GetPet;
 using PetHome.Domain;
 using PetHome.Persistence;
@@ -49,6 +50,15 @@ public class GetPetsQuery
                 predicate = predicate
                 .And(y => y.Breed!.Contains(request.PetRequest!.Breed));
             }
+            
+            if(request.PetRequest!.Type != null)
+            {
+                if (request.PetRequest!.Type != PetType.None)
+                {
+                    predicate = predicate
+                        .And(y => y.Type!.Equals(request.PetRequest!.Type));
+                }
+            }
 
             if(!string.IsNullOrEmpty(request.PetRequest.OrderBy))
             {
@@ -57,6 +67,7 @@ public class GetPetsQuery
                 {
                     "name" => pet => pet.Name!,
                     "breed" => pet => pet.Breed!,
+                    "type" => pet => pet.Type!,
                     _ => pet => pet.Name!
                 };
 
@@ -71,7 +82,8 @@ public class GetPetsQuery
 
             queryable = queryable.Where(predicate);
 
-            var petsQuery = queryable
+            IQueryable<PetSimpleResponse> petsQuery = queryable
+                    .Include(x => x.Photos)
                         .ProjectTo<PetSimpleResponse>(_mapper.ConfigurationProvider)
                         .AsQueryable();
 

@@ -33,14 +33,14 @@ public class GetOwnerQuery
 			CancellationToken cancellationToken
 		)
 		{
-			var curso = await _context.Owners!.Where(x => x.Id == request.Id)
+			var owner = await _context.Owners!.Where(x => x.Id == request.Id)
 				.Include(x=>x.Pets)
 				// .Include(x => x.Precios)
 				// .Include(x => x.Photos)
 				.ProjectTo<OwnerResponse>(_mapper.ConfigurationProvider)
-				.FirstOrDefaultAsync();
+				.FirstOrDefaultAsync(cancellationToken: cancellationToken);
 
-			return Result<OwnerResponse>.Success(curso!);
+			return Result<OwnerResponse>.Success(owner!);
 		}
 	}
 

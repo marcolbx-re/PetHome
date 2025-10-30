@@ -222,7 +222,8 @@ namespace PetHome.Persistence.Migrations
                         name: "FK_Photo_Pets_PetId",
                         column: x => x.PetId,
                         principalTable: "Pets",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -303,8 +304,8 @@ namespace PetHome.Persistence.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "87e5fadd-c564-4a18-8a96-a7007fe32bba", null, "ADMIN", "ADMIN" },
-                    { "ad648686-abcd-4475-bde6-0f51270702e0", null, "CLIENT", "CLIENT" }
+                    { "71d62020-0752-4433-b123-c239035689ef", null, "CLIENT", "CLIENT" },
+                    { "cdb7db1c-75dd-4e45-beff-0999a8cac03c", null, "ADMIN", "ADMIN" }
                 });
 
             migrationBuilder.InsertData(
@@ -312,15 +313,15 @@ namespace PetHome.Persistence.Migrations
                 columns: new[] { "Id", "ClaimType", "ClaimValue", "RoleId" },
                 values: new object[,]
                 {
-                    { 1, "POLICIES", "OWNER_READ", "87e5fadd-c564-4a18-8a96-a7007fe32bba" },
-                    { 2, "POLICIES", "OWNER_UPDATE", "87e5fadd-c564-4a18-8a96-a7007fe32bba" },
-                    { 3, "POLICIES", "OWNER_CREATE", "87e5fadd-c564-4a18-8a96-a7007fe32bba" },
-                    { 4, "POLICIES", "OWNER_DELETE", "87e5fadd-c564-4a18-8a96-a7007fe32bba" },
-                    { 5, "POLICIES", "PET_CREATE", "87e5fadd-c564-4a18-8a96-a7007fe32bba" },
-                    { 6, "POLICIES", "PET_READ", "87e5fadd-c564-4a18-8a96-a7007fe32bba" },
-                    { 7, "POLICIES", "PET_UPDATE", "87e5fadd-c564-4a18-8a96-a7007fe32bba" },
-                    { 8, "POLICIES", "OWNER_READ", "ad648686-abcd-4475-bde6-0f51270702e0" },
-                    { 9, "POLICIES", "PET_READ", "ad648686-abcd-4475-bde6-0f51270702e0" }
+                    { 1, "POLICIES", "OWNER_READ", "cdb7db1c-75dd-4e45-beff-0999a8cac03c" },
+                    { 2, "POLICIES", "OWNER_UPDATE", "cdb7db1c-75dd-4e45-beff-0999a8cac03c" },
+                    { 3, "POLICIES", "OWNER_CREATE", "cdb7db1c-75dd-4e45-beff-0999a8cac03c" },
+                    { 4, "POLICIES", "OWNER_DELETE", "cdb7db1c-75dd-4e45-beff-0999a8cac03c" },
+                    { 5, "POLICIES", "PET_CREATE", "cdb7db1c-75dd-4e45-beff-0999a8cac03c" },
+                    { 6, "POLICIES", "PET_READ", "cdb7db1c-75dd-4e45-beff-0999a8cac03c" },
+                    { 7, "POLICIES", "PET_UPDATE", "cdb7db1c-75dd-4e45-beff-0999a8cac03c" },
+                    { 8, "POLICIES", "OWNER_READ", "71d62020-0752-4433-b123-c239035689ef" },
+                    { 9, "POLICIES", "PET_READ", "71d62020-0752-4433-b123-c239035689ef" }
                 });
 
             migrationBuilder.CreateIndex(

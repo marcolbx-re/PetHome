@@ -43,7 +43,7 @@ public class OwnersController : ControllerBase
 	[AllowAnonymous]
 	[HttpGet("{id}")]
 	[ProducesResponseType((int)HttpStatusCode.OK)]
-	public async Task<ActionResult<OwnerResponse>> CursoGet(
+	public async Task<ActionResult<OwnerResponse>> OwnerGet(
 		Guid id,
 		CancellationToken cancellationToken
 	)
@@ -69,7 +69,7 @@ public class OwnersController : ControllerBase
 	[Authorize(Policy = PolicyMaster.OWNER_UPDATE)]
 	[HttpPut("{id}")]
 	[ProducesResponseType((int)HttpStatusCode.OK)]
-	public async Task<ActionResult<Result<Guid>>> CursoUpdate(
+	public async Task<ActionResult<Result<Guid>>> OwnerUpdate(
 		[FromBody] OwnerUpdateRequest request,
 		Guid id,
 		CancellationToken cancellationToken

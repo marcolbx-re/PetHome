@@ -1,12 +1,15 @@
 ﻿using System.Net;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using PetHome.Application.Core;
 using PetHome.Application.DTOs;
 using PetHome.Application.Pets.DeletePet;
+using PetHome.Application.Pets.ExcelReportPet;
 using PetHome.Application.Pets.GetPet;
 using PetHome.Application.Pets.GetPets;
+using PetHome.Application.Pets.PatchPet;
 using PetHome.Application.Pets.UpdatePet;
 using PetHome.Domain;
 
@@ -42,7 +45,7 @@ public class PetsController : ControllerBase
 	[Authorize(Policy = PolicyMaster.PET_CREATE)]
 	[HttpPost]
 	[ProducesResponseType((int)HttpStatusCode.OK)]
-	public async Task<ActionResult<Result<Guid>>> CatCreate(
+	public async Task<ActionResult<Result<Guid>>> PettCreate(
 		[FromForm] PetCreateRequest request,
 		CancellationToken cancellationToken
 	)
@@ -55,7 +58,7 @@ public class PetsController : ControllerBase
 	[AllowAnonymous]
 	[HttpGet("{id}")]
 	[ProducesResponseType((int)HttpStatusCode.OK)]
-	public async Task<ActionResult<CatDTO>> CursoGet(
+	public async Task<ActionResult<PetDTO>> PetGet(
 		Guid id,
 		CancellationToken cancellationToken
 	)
@@ -68,7 +71,7 @@ public class PetsController : ControllerBase
 	[Authorize(Policy = PolicyMaster.PET_UPDATE)]
 	[HttpPut("{id}")]
 	[ProducesResponseType((int)HttpStatusCode.OK)]
-	public async Task<ActionResult<Result<Guid>>> CursoUpdate(
+	public async Task<ActionResult<Result<Guid>>> PetUpdate(
 		[FromBody] PetUpdateRequest request,
 		Guid id,
 		CancellationToken cancellationToken
@@ -79,10 +82,24 @@ public class PetsController : ControllerBase
 		return result.IsSuccess ? Ok(result.Value) : BadRequest();
 	}
 	
+	[Authorize(Policy = PolicyMaster.PET_UPDATE)]
+	[HttpPatch("{id}")]
+	[Consumes("application/json-patch+json")]
+	[ProducesResponseType((int)HttpStatusCode.OK)]
+	public async Task<ActionResult<Result<Guid>>> PetPatch(
+		Guid id, JsonPatchDocument<PetPatchRequest> patchDoc,
+		CancellationToken cancellationToken
+	)
+	{
+		var command = new PetPatchCommand.PetPatchCommandRequest(id, patchDoc);
+		var result = await _sender.Send(command, cancellationToken);
+		return result.IsSuccess ? Ok(result.Value) : BadRequest();
+	}
+	
 	[Authorize(Policy = PolicyMaster.PET_DELETE)]
 	[HttpDelete("{id}")]
 	[ProducesResponseType((int)HttpStatusCode.OK)]
-	public async Task<ActionResult<Unit>> OwnerDelete(
+	public async Task<ActionResult<Unit>> PetDelete(
 		Guid id,
 		CancellationToken cancellationToken
 	)
@@ -90,5 +107,15 @@ public class PetsController : ControllerBase
 		var command = new PetDeleteCommand.PetDeleteCommandRequest(id);
 		var result = await _sender.Send(command, cancellationToken);
 		return result.IsSuccess ? Ok() : BadRequest();
+	}
+	
+	[AllowAnonymous]
+	[HttpGet("report")]
+	public async Task<IActionResult> ReportCSV(CancellationToken cancellationToken)
+	{
+		var query = new ExcelReportPetQuery.ExcelReportPetQueryRequest();
+		var result = await _sender.Send(query, cancellationToken);
+		byte[] excelBytes = result.ToArray();
+		return File(excelBytes, "text/csv", "pets.csv");
 	}
 }

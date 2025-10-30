@@ -27,6 +27,7 @@ public class PetDeleteCommand
 		)
 		{
 			var pet = await _context.Pets!
+				.Include(x => x.Photos)
 				.FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken: cancellationToken);
 
 			if (pet is null)

@@ -14,8 +14,6 @@ public class PetHomeDbContext : IdentityDbContext<AppUser>
 	// public DbSet<Transaction>? Transactions {get;set;}
 	// public DbSet<Stay>? Stays {get;set;}
 	// public DbSet<CareActivity>? Activities {get;set;}
-	// public DbSet<Photo>? Photos {get;set;}
-	
 	public PetHomeDbContext()
 	{
 	}
@@ -39,12 +37,12 @@ public class PetHomeDbContext : IdentityDbContext<AppUser>
 			.HasForeignKey(s => s.PetId)
 			.OnDelete(DeleteBehavior.Restrict);
 		
-		// modelBuilder.Entity<Pet>()
-		// 	.HasMany(m => m.Photos)
-		// 	.WithOne(m => m.Pet)
-		// 	.HasForeignKey(m => m.PetId)
-		// 	.OnDelete(DeleteBehavior.Cascade);
-		//
+		modelBuilder.Entity<Pet>()
+			.HasMany(m => m.Photos)
+			.WithOne(m => m.Pet)
+			.HasForeignKey(m => m.PetId)
+			.OnDelete(DeleteBehavior.Cascade);
+		
 		// modelBuilder.Entity<Stay>()
 		// 	.HasMany(s => s.CareActivities)
 		// 	.WithOne(a => a.Stay)

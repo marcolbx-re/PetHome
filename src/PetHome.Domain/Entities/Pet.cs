@@ -23,7 +23,7 @@ public class Pet : BaseEntity
 	protected Pet() { } // EF Core
 
 	public Pet(string name, string breed, DateTime birthDate,
-		Guid ownerId, GenderType gender, bool requiresSpecialDiet, PetType petType, bool isDeclawed,Size size, string specialInstructions = "" )
+		Guid ownerId, GenderType gender, bool requiresSpecialDiet, PetType type, bool isDeclawed,Size size, string specialInstructions = "" )
 	{
 		Id = Guid.NewGuid();
 		Name = name;
@@ -32,16 +32,11 @@ public class Pet : BaseEntity
 		OwnerId = ownerId;
 		SpecialInstructions = specialInstructions;
 		Gender = gender;
-		Type = petType;
+		Type = type;
 		RequiresSpecialDiet = requiresSpecialDiet;
 		IsDeclawed = isDeclawed;
 		Size = size;
 		RegistrationDate = DateTime.Now;
-	}
-
-	public string GetPetType()
-	{
-		return Type.ToString();
 	}
 	public virtual decimal GetDailyRate()
 	{

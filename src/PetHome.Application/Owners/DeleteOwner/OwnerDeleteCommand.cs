@@ -32,7 +32,7 @@ public class OwnerDeleteCommand
 
 			if (owner is null)
 			{
-				return Result<Unit>.Failure("El curso no existe");
+				return Result<Unit>.Failure("El owner no existe");
 			}
 
 			_context.Owners!.Remove(owner);

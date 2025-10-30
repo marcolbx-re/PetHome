@@ -1,4 +1,5 @@
-﻿using PetHome.Domain;
+﻿using Microsoft.AspNetCore.Http;
+using PetHome.Domain;
 
 namespace PetHome.Application.DTOs;
 
@@ -7,7 +8,7 @@ public class PetCreateRequest
 	public string Name { get; set; }
 	public string Breed { get; set; }
 	public DateTime BirthDate { get; set; }
-	//public ICollection<Photo>? Photos {get;set;}
+	public IFormFile? Photo {get;set;}
 	public string SpecialInstructions { get; set; }
 	public GenderType Gender { get; set; }
 	public PetType Type { get; set; }

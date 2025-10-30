@@ -64,7 +64,7 @@ public static class DbSeeder
 				gender: GenderType.Female,
 				requiresSpecialDiet: true,
 				isDeclawed: false,
-				petType: PetType.Cat,
+				type: PetType.Cat,
 				size: Size.Small
 			);
 
