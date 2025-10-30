@@ -39,7 +39,7 @@ Un dueño (**Owner**) tiene 1 o varias mascotas (**Pets**). Cada **Pet** puede t
 2) Usa el login con los siguientes credenciales: admin@gmail.com y Password123$
 3) Usa el JsonWebToken que obtienes del response para colocarlo en el Authorize. Presiona Login y ahora tienes permisos de administrador.
 4) Con los permisos de administrador puedes hacer uso de todos los Endpoints. CRUD.
-5) Si quieres revisar como funciona la permisologia, registra un nuevo usuario y usa ese login para hacer use de los demas Endpoints. No va a poder modificar, crear o eliminar.
+5) Si quieres revisar como funciona la permisologia, registra un nuevo usuario y usa ese login para usar los Endpoints. Ese nuevo usuario no va a poder modificar, crear o eliminar.
 
 ---
 
