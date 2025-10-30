@@ -30,6 +30,7 @@ Este proyecto demuestra prácticas modernas de desarrollo backend con un enfoque
 - 🔁 Mapeo de objetos con AutoMapper
 - ✔️ Validacion de los requests con Fluent Validation
 - 🔢 Reportes en Excel usando CSVHelper
+- 📸 Subida de imagenes con Cloudinary.
 
 
 
@@ -63,3 +64,5 @@ This project demonstrates modern backend development practices with a focus on *
 - 🧠 CQRS pattern using MediatR  
 - 🔁 Object mapping with AutoMapper
 - 🔢 Excel reports with CSVHelper
+- 📸 Image upload with Cloudinary.
+
