@@ -6,8 +6,8 @@
 
 **PetHome** es una aplicación web basada en **.NET** diseñada para ayudar a los usuarios a gestionar la estancia de mascotas en PetHome, su información y las operaciones relacionadas de manera eficiente.  
 Este proyecto demuestra prácticas modernas de desarrollo backend con un enfoque en **arquitectura limpia (Clean Architecture)**, **mantenibilidad** y **seguridad**.
-Un dueño (Owner) tiene 1 o varias mascotas (Pets). Cada Pet puede tener una estancia temporal (Stay). Y cada Stay tiene una trasaccion (Transaction)
 ---
+Un dueño (Owner) tiene 1 o varias mascotas (Pets). Cada Pet puede tener una estancia temporal (Stay). Y cada Stay tiene una trasaccion (Transaction)
 
 ### 🚀 Tecnologías Utilizadas
 
