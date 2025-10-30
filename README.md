@@ -49,6 +49,7 @@ Un dueño (Owner) tiene 1 o varias mascotas (Pets). Cada Pet puede tener una est
 This project demonstrates modern backend development practices with a focus on **Clean Architecture**, **maintainability**, and **security**.
 
 ---
+An (Owner) has one or more (Pets). Every Pet can stay once or more at PetHome. Each Stay requires a Transaction.
 
 ### 🚀 Tech Stack
 
