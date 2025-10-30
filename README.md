@@ -8,7 +8,7 @@
 Este proyecto demuestra prácticas modernas de desarrollo backend con un enfoque en **arquitectura limpia (Clean Architecture)**, **mantenibilidad** y **seguridad**.
 
 ---
-Un dueño (Owner) tiene 1 o varias mascotas (Pets). Cada Pet puede tener una estancia temporal (Stay). Y cada Stay tiene una trasaccion (Transaction)
+Un dueño (Owner) tiene 1 o varias mascotas (Pets). Cada Pet puede tener una estancia temporal (Stay). Y cada Stay tiene una transaccion (Transaction)
 
 ### 🚀 Tecnologías Utilizadas
 
