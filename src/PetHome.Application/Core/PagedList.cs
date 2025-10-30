@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace MasterNet.Application.Core;
+namespace PetHome.Application.Core;
 
 public class PagedList<T>
 {  

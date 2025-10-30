@@ -1,6 +1,8 @@
 using System.Text.Json.Serialization;
 using PetHome.Application;
+using PetHome.Application.Interfaces;
 using PetHome.Infrastructure;
+using PetHome.Infrastructure.Photos;
 using PetHome.Persistence;
 using PetHome.WebApi.Extensions;
 
@@ -9,6 +11,10 @@ builder.Services.AddApplication();
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddIdentityServices(builder.Configuration);
 builder.Services.AddPoliciesServices();
+builder.Services
+    .Configure<CloudinarySettings>
+        (builder.Configuration.GetSection(nameof(CloudinarySettings)));
+builder.Services.AddScoped<IPhotoService, PhotoService>();
 builder.Services.AddInfrastructure();
 builder.Services.AddOpenApi();
 builder.Services.AddHttpContextAccessor();

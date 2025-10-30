@@ -1,10 +1,8 @@
 ﻿using System.Linq.Expressions;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using MasterNet.Application.Core;
-using MediatR;
 using PetHome.Application.Core;
-using PetHome.Application.DTOs;
+using MediatR;
 using PetHome.Application.Pets.GetPet;
 using PetHome.Domain;
 using PetHome.Persistence;

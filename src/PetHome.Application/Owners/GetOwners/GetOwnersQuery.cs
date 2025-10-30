@@ -1,11 +1,9 @@
 ﻿using System.Linq.Expressions;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using MasterNet.Application.Core;
+using PetHome.Application.Core;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using PetHome.Application.Core;
-using PetHome.Application.DTOs;
 using PetHome.Application.Pets.GetPet;
 using PetHome.Persistence;
 namespace PetHome.Application.Owner.GetOwners;

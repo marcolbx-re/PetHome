@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using MasterNet.Application.Core;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
