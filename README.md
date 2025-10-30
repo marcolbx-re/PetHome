@@ -11,7 +11,8 @@ Este proyecto demuestra prácticas modernas de desarrollo backend con un enfoque
 ### 🚀 Tecnologías Utilizadas
 
 - **.NET 9 / ASP.NET Core Web API**
-- **Entity Framework Core (EF Core)** – ORM para operaciones con bases de datos  
+- **Entity Framework Core (EF Core)** – ORM para operaciones con bases de datos
+- **SQLlite** – SQLlite como bases de datos   
 - **Clean Architecture** – separación de responsabilidades y alta capacidad de prueba  
 - **MediatR** – implementación del patrón **CQRS**, simplificando el manejo de solicitudes y respuestas  
 - **AutoMapper** – para el mapeo entre entidades y DTOs  
@@ -52,7 +53,8 @@ This project demonstrates modern backend development practices with a focus on *
 ### 🚀 Tech Stack
 
 - **.NET 9 / ASP.NET Core Web API**
-- **Entity Framework Core (EF Core)** – ORM for database operations  
+- **Entity Framework Core (EF Core)** – ORM for database operations
+- **SQLlite** – SQLlite as database   
 - **Clean Architecture** – clear separation of concerns and high testability  
 - **MediatR** – implements the **CQRS** pattern, simplifying request and response handling  
 - **AutoMapper** – for mapping between entities and DTOs  
