@@ -33,7 +33,7 @@ Este proyecto demuestra prácticas modernas de desarrollo backend con un enfoque
 - 📸 Subida de imagenes con Cloudinary.
 
 ### 📝 Instrucciones
-Un dueño (Owner) tiene 1 o varias mascotas (Pets). Cada Pet puede tener una estancia temporal (Stay). Y cada Stay tiene una transaccion (Transaction)
+Un dueño (**Owner**) tiene 1 o varias mascotas (**Pets**). Cada **Pet** puede tener una estancia temporal (**Stay**). Y cada **Stay** tiene una transaccion (**Transaction**)
 1) Puedes usar swagger para ver los Rest APIs: http://localhost:5001/swagger/index.html
 2) Usa el login con los siguientes credenciales: admin@gmail.com y Password123$
 3) Usa el JsonWebToken que obtienes del response para colocarlo en el Authorize. Presiona Login y ahora tienes permisos de administrador.
@@ -73,7 +73,7 @@ This project demonstrates modern backend development practices with a focus on *
 - 📸 Image upload with Cloudinary.
 
 ### 📝 Instructions
-An (Owner) has one or more (Pets). Every Pet can stay once or more at PetHome. Each Stay requires a Transaction.
+An (**Owner**) has one or more (**Pets**). Every **Pet** can stay once or more at PetHome. Each **Stay** requires a **Transaction**.
 1) You can use Swagger to view the REST APIs: http://localhost:5001/swagger/index.html
 2) Use the login with the following credentials: admin@gmail.com and Password123$
 3) Use the JSON Web Token you get from the response to place it in Authorize. Press Login and now you have administrator permissions.
