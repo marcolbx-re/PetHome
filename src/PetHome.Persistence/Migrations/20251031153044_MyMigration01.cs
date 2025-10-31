@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PetHome.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class MyMigration : Migration
+    public partial class MyMigration01 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -227,25 +227,24 @@ namespace PetHome.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Stay",
+                name: "Stays",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    PetId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    CheckInDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    CheckOutDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Status = table.Column<int>(type: "INTEGER", nullable: false),
-                    DailyRate = table.Column<decimal>(type: "TEXT", nullable: false),
-                    TotalCost = table.Column<decimal>(type: "TEXT", nullable: false),
-                    Notes = table.Column<string>(type: "TEXT", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    TransactionId = table.Column<Guid>(type: "TEXT", nullable: true)
+                    PetId = table.Column<Guid>(type: "TEXT", nullable: true),
+                    CheckInDate = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    CheckOutDate = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    Status = table.Column<int>(type: "INTEGER", nullable: true),
+                    DailyRate = table.Column<decimal>(type: "TEXT", nullable: true),
+                    TotalCost = table.Column<decimal>(type: "TEXT", nullable: true),
+                    Notes = table.Column<string>(type: "TEXT", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Stay", x => x.Id);
+                    table.PrimaryKey("PK_Stays", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Stay_Pets_PetId",
+                        name: "FK_Stays_Pets_PetId",
                         column: x => x.PetId,
                         principalTable: "Pets",
                         principalColumn: "Id",
@@ -253,50 +252,25 @@ namespace PetHome.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CareActivity",
+                name: "Transactions",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    StayId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Type = table.Column<int>(type: "INTEGER", nullable: false),
-                    PerformedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    PerformedBy = table.Column<string>(type: "TEXT", nullable: false),
-                    Notes = table.Column<string>(type: "TEXT", nullable: false)
+                    StayId = table.Column<Guid>(type: "TEXT", nullable: true),
+                    Amount = table.Column<decimal>(type: "TEXT", nullable: true),
+                    PaymentMethod = table.Column<int>(type: "INTEGER", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    Status = table.Column<int>(type: "INTEGER", nullable: true),
+                    Reference = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CareActivity", x => x.Id);
+                    table.PrimaryKey("PK_Transactions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CareActivity_Stay_StayId",
+                        name: "FK_Transactions_Stays_StayId",
                         column: x => x.StayId,
-                        principalTable: "Stay",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Transaction",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    StayId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    StayId1 = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Amount = table.Column<decimal>(type: "TEXT", nullable: false),
-                    PaymentMethod = table.Column<string>(type: "TEXT", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Status = table.Column<int>(type: "INTEGER", nullable: false),
-                    Reference = table.Column<string>(type: "TEXT", nullable: false),
-                    Metadata = table.Column<string>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Transaction", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Transaction_Stay_StayId1",
-                        column: x => x.StayId1,
-                        principalTable: "Stay",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalTable: "Stays",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.InsertData(
@@ -304,8 +278,8 @@ namespace PetHome.Persistence.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "71d62020-0752-4433-b123-c239035689ef", null, "CLIENT", "CLIENT" },
-                    { "cdb7db1c-75dd-4e45-beff-0999a8cac03c", null, "ADMIN", "ADMIN" }
+                    { "0ecf5104-d94b-4b11-99a4-b293c69633ce", null, "ADMIN", "ADMIN" },
+                    { "b7d8a3ab-6bcc-402a-948a-858349e56232", null, "CLIENT", "CLIENT" }
                 });
 
             migrationBuilder.InsertData(
@@ -313,15 +287,15 @@ namespace PetHome.Persistence.Migrations
                 columns: new[] { "Id", "ClaimType", "ClaimValue", "RoleId" },
                 values: new object[,]
                 {
-                    { 1, "POLICIES", "OWNER_READ", "cdb7db1c-75dd-4e45-beff-0999a8cac03c" },
-                    { 2, "POLICIES", "OWNER_UPDATE", "cdb7db1c-75dd-4e45-beff-0999a8cac03c" },
-                    { 3, "POLICIES", "OWNER_CREATE", "cdb7db1c-75dd-4e45-beff-0999a8cac03c" },
-                    { 4, "POLICIES", "OWNER_DELETE", "cdb7db1c-75dd-4e45-beff-0999a8cac03c" },
-                    { 5, "POLICIES", "PET_CREATE", "cdb7db1c-75dd-4e45-beff-0999a8cac03c" },
-                    { 6, "POLICIES", "PET_READ", "cdb7db1c-75dd-4e45-beff-0999a8cac03c" },
-                    { 7, "POLICIES", "PET_UPDATE", "cdb7db1c-75dd-4e45-beff-0999a8cac03c" },
-                    { 8, "POLICIES", "OWNER_READ", "71d62020-0752-4433-b123-c239035689ef" },
-                    { 9, "POLICIES", "PET_READ", "71d62020-0752-4433-b123-c239035689ef" }
+                    { 1, "POLICIES", "OWNER_READ", "0ecf5104-d94b-4b11-99a4-b293c69633ce" },
+                    { 2, "POLICIES", "OWNER_UPDATE", "0ecf5104-d94b-4b11-99a4-b293c69633ce" },
+                    { 3, "POLICIES", "OWNER_CREATE", "0ecf5104-d94b-4b11-99a4-b293c69633ce" },
+                    { 4, "POLICIES", "OWNER_DELETE", "0ecf5104-d94b-4b11-99a4-b293c69633ce" },
+                    { 5, "POLICIES", "PET_CREATE", "0ecf5104-d94b-4b11-99a4-b293c69633ce" },
+                    { 6, "POLICIES", "PET_READ", "0ecf5104-d94b-4b11-99a4-b293c69633ce" },
+                    { 7, "POLICIES", "PET_UPDATE", "0ecf5104-d94b-4b11-99a4-b293c69633ce" },
+                    { 8, "POLICIES", "OWNER_READ", "b7d8a3ab-6bcc-402a-948a-858349e56232" },
+                    { 9, "POLICIES", "PET_READ", "b7d8a3ab-6bcc-402a-948a-858349e56232" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -362,11 +336,6 @@ namespace PetHome.Persistence.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_CareActivity_StayId",
-                table: "CareActivity",
-                column: "StayId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Pets_OwnerId",
                 table: "Pets",
                 column: "OwnerId");
@@ -377,14 +346,15 @@ namespace PetHome.Persistence.Migrations
                 column: "PetId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Stay_PetId",
-                table: "Stay",
+                name: "IX_Stays_PetId",
+                table: "Stays",
                 column: "PetId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Transaction_StayId1",
-                table: "Transaction",
-                column: "StayId1");
+                name: "IX_Transactions_StayId",
+                table: "Transactions",
+                column: "StayId",
+                unique: true);
         }
 
         /// <inheritdoc />
@@ -406,13 +376,10 @@ namespace PetHome.Persistence.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "CareActivity");
-
-            migrationBuilder.DropTable(
                 name: "Photo");
 
             migrationBuilder.DropTable(
-                name: "Transaction");
+                name: "Transactions");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -421,7 +388,7 @@ namespace PetHome.Persistence.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Stay");
+                name: "Stays");
 
             migrationBuilder.DropTable(
                 name: "Pets");

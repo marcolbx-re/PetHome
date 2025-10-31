@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Newtonsoft.Json;
 using PetHome.Domain;
 using PetHome.Persistence;
 using PetHome.Persistence.Models;
@@ -49,5 +50,92 @@ public static class DataSeed
             var logger = loggerFactory.CreateLogger<PetHomeDbContext>();
             logger.LogError(e.Message);
         }
+    }
+    
+    public static async Task SeedOwnersAsync(
+        this IApplicationBuilder app)
+    {
+        using var scope = app.ApplicationServices.CreateScope();
+        var service = scope.ServiceProvider;
+        var loggerFactory = service.GetRequiredService<ILoggerFactory>();
+        try
+        {
+            var dbContext = service.GetRequiredService<PetHomeDbContext>();
+            if (dbContext.Owners is null || dbContext.Owners.Any()) return;
+            var jsonString = GetJsonFile("owners.json");
+
+            if (jsonString is null) return;
+
+            var owners = JsonConvert.DeserializeObject<List<Owner>>(jsonString);
+
+            if (owners is null || owners.Any() == false) return;
+
+            dbContext.Owners.AddRange(owners!);
+            await dbContext.SaveChangesAsync();
+
+        }
+        catch (Exception ex)
+        {
+            var logger = loggerFactory.CreateLogger<PetHomeDbContext>();
+            logger.LogError(ex.Message);
+        }
+    }
+    
+    public static async Task SeedPetsAsync(
+        this IApplicationBuilder app)
+    {
+        using var scope = app.ApplicationServices.CreateScope();
+        var service = scope.ServiceProvider;
+        var loggerFactory = service.GetRequiredService<ILoggerFactory>();
+        try
+        {
+            var dbContext = service.GetRequiredService<PetHomeDbContext>();
+            if (dbContext.Pets is null || dbContext.Pets.Any()) return;
+            var jsonString = GetJsonFile("pets.json");
+
+            if (jsonString is null) return;
+
+            var pets = JsonConvert.DeserializeObject<List<Pet>>(jsonString);
+
+            if (pets is null || !pets.Any()) return;
+
+            dbContext.Pets.AddRange(pets!);
+            await dbContext.SaveChangesAsync();
+
+        }
+        catch (Exception ex)
+        {
+            var logger = loggerFactory.CreateLogger<PetHomeDbContext>();
+            logger.LogError(ex.Message);
+        }
+    }
+    
+    private static string GetJsonFile(string fileName)
+    {
+        var leerForma1 = Path.Combine(
+            Directory.GetCurrentDirectory(),
+            "src",
+            "PetHome.Persistence",
+            "SeedData",
+            fileName
+        );
+
+        var leerForma2 = Path.Combine(
+            Directory.GetCurrentDirectory(),
+            "SeedData",
+            fileName
+        );
+
+        var leerForma3 = Path.Combine(
+            AppContext.BaseDirectory,
+            "SeedData",
+            fileName
+        );
+
+        if (File.Exists(leerForma1)) return File.ReadAllText(leerForma1);
+        if (File.Exists(leerForma2)) return File.ReadAllText(leerForma2);
+        if (File.Exists(leerForma3)) return File.ReadAllText(leerForma3);
+
+        return null!;
     }
 }

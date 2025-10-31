@@ -37,5 +37,7 @@ app.UseAuthorization();
 app.UseCors("corsapp");
 //app.UseHttpsRedirection();
 await app.SeedDataAuthentication();
+await app.SeedOwnersAsync();
+await app.SeedPetsAsync();
 app.MapControllers();
 app.Run();

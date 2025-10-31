@@ -1,20 +1,24 @@
 ﻿[
   {
-    "OwnerId": "11111111-1111-1111-1111-111111111111",
+    "Id": "11111111-1111-1111-1111-111111111111",
     "FirstName": "Alice",
     "LastName": "Johnson",
     "Email": "alice.johnson@example.com",
     "PhoneNumber": "555-1234",
     "IsNewsletterSubscribed": true,
-    "CreatedAt": "2025-10-24T08:00:00Z"
+    "CreatedAt": "2025-10-24T08:00:00Z",
+    "IdentificationType": "NIE",
+    "IdentificationNumber": "Z3452323V"
   },
   {
-    "OwnerId": "22222222-2222-2222-2222-222222222222",
+    "Id": "22222222-2222-2222-2222-222222222222",
     "FirstName": "Bob",
     "LastName": "Smith",
     "Email": "bob.smith@example.com",
     "PhoneNumber": "555-5678",
     "IsNewsletterSubscribed": false,
-    "CreatedAt": "2025-10-24T09:00:00Z"
+    "CreatedAt": "2025-10-24T09:00:00Z",
+    "IdentificationType": "DNI",
+    "IdentificationNumber": "YU12345V"
   }
 ]

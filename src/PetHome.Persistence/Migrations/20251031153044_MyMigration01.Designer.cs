@@ -11,8 +11,8 @@ using PetHome.Persistence;
 namespace PetHome.Persistence.Migrations
 {
     [DbContext(typeof(PetHomeDbContext))]
-    [Migration("20251030101648_MyMigration")]
-    partial class MyMigration
+    [Migration("20251031153044_MyMigration01")]
+    partial class MyMigration01
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -48,13 +48,13 @@ namespace PetHome.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "cdb7db1c-75dd-4e45-beff-0999a8cac03c",
+                            Id = "0ecf5104-d94b-4b11-99a4-b293c69633ce",
                             Name = "ADMIN",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "71d62020-0752-4433-b123-c239035689ef",
+                            Id = "b7d8a3ab-6bcc-402a-948a-858349e56232",
                             Name = "CLIENT",
                             NormalizedName = "CLIENT"
                         });
@@ -88,63 +88,63 @@ namespace PetHome.Persistence.Migrations
                             Id = 1,
                             ClaimType = "POLICIES",
                             ClaimValue = "OWNER_READ",
-                            RoleId = "cdb7db1c-75dd-4e45-beff-0999a8cac03c"
+                            RoleId = "0ecf5104-d94b-4b11-99a4-b293c69633ce"
                         },
                         new
                         {
                             Id = 2,
                             ClaimType = "POLICIES",
                             ClaimValue = "OWNER_UPDATE",
-                            RoleId = "cdb7db1c-75dd-4e45-beff-0999a8cac03c"
+                            RoleId = "0ecf5104-d94b-4b11-99a4-b293c69633ce"
                         },
                         new
                         {
                             Id = 3,
                             ClaimType = "POLICIES",
                             ClaimValue = "OWNER_CREATE",
-                            RoleId = "cdb7db1c-75dd-4e45-beff-0999a8cac03c"
+                            RoleId = "0ecf5104-d94b-4b11-99a4-b293c69633ce"
                         },
                         new
                         {
                             Id = 4,
                             ClaimType = "POLICIES",
                             ClaimValue = "OWNER_DELETE",
-                            RoleId = "cdb7db1c-75dd-4e45-beff-0999a8cac03c"
+                            RoleId = "0ecf5104-d94b-4b11-99a4-b293c69633ce"
                         },
                         new
                         {
                             Id = 5,
                             ClaimType = "POLICIES",
                             ClaimValue = "PET_CREATE",
-                            RoleId = "cdb7db1c-75dd-4e45-beff-0999a8cac03c"
+                            RoleId = "0ecf5104-d94b-4b11-99a4-b293c69633ce"
                         },
                         new
                         {
                             Id = 6,
                             ClaimType = "POLICIES",
                             ClaimValue = "PET_READ",
-                            RoleId = "cdb7db1c-75dd-4e45-beff-0999a8cac03c"
+                            RoleId = "0ecf5104-d94b-4b11-99a4-b293c69633ce"
                         },
                         new
                         {
                             Id = 7,
                             ClaimType = "POLICIES",
                             ClaimValue = "PET_UPDATE",
-                            RoleId = "cdb7db1c-75dd-4e45-beff-0999a8cac03c"
+                            RoleId = "0ecf5104-d94b-4b11-99a4-b293c69633ce"
                         },
                         new
                         {
                             Id = 8,
                             ClaimType = "POLICIES",
                             ClaimValue = "OWNER_READ",
-                            RoleId = "71d62020-0752-4433-b123-c239035689ef"
+                            RoleId = "b7d8a3ab-6bcc-402a-948a-858349e56232"
                         },
                         new
                         {
                             Id = 9,
                             ClaimType = "POLICIES",
                             ClaimValue = "PET_READ",
-                            RoleId = "71d62020-0752-4433-b123-c239035689ef"
+                            RoleId = "b7d8a3ab-6bcc-402a-948a-858349e56232"
                         });
                 });
 
@@ -225,36 +225,6 @@ namespace PetHome.Persistence.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("PetHome.Domain.CareActivity", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Notes")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("PerformedAt")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("PerformedBy")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("StayId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("StayId");
-
-                    b.ToTable("CareActivity");
                 });
 
             modelBuilder.Entity("PetHome.Domain.Owner", b =>
@@ -366,39 +336,35 @@ namespace PetHome.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("CheckInDate")
+                    b.Property<DateTime?>("CheckInDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("CheckOutDate")
+                    b.Property<DateTime?>("CheckOutDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("TEXT");
 
-                    b.Property<decimal>("DailyRate")
+                    b.Property<decimal?>("DailyRate")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Notes")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("PetId")
+                    b.Property<Guid?>("PetId")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Status")
+                    b.Property<int?>("Status")
                         .HasColumnType("INTEGER");
 
-                    b.Property<decimal>("TotalCost")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid?>("TransactionId")
+                    b.Property<decimal?>("TotalCost")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
                     b.HasIndex("PetId");
 
-                    b.ToTable("Stay");
+                    b.ToTable("Stays", (string)null);
                 });
 
             modelBuilder.Entity("PetHome.Domain.Transaction", b =>
@@ -407,38 +373,30 @@ namespace PetHome.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<decimal>("Amount")
+                    b.Property<decimal?>("Amount")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Metadata")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("PaymentMethod")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Reference")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Status")
+                    b.Property<int?>("PaymentMethod")
                         .HasColumnType("INTEGER");
 
-                    b.Property<Guid>("StayId")
+                    b.Property<string>("Reference")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("StayId1")
+                    b.Property<int?>("Status")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<Guid?>("StayId")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("StayId1");
+                    b.HasIndex("StayId")
+                        .IsUnique();
 
-                    b.ToTable("Transaction");
+                    b.ToTable("Transactions");
                 });
 
             modelBuilder.Entity("PetHome.Persistence.Models.AppUser", b =>
@@ -559,17 +517,6 @@ namespace PetHome.Persistence.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PetHome.Domain.CareActivity", b =>
-                {
-                    b.HasOne("PetHome.Domain.Stay", "Stay")
-                        .WithMany("CareActivities")
-                        .HasForeignKey("StayId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Stay");
-                });
-
             modelBuilder.Entity("PetHome.Domain.Pet", b =>
                 {
                     b.HasOne("PetHome.Domain.Owner", "Owner")
@@ -595,8 +542,7 @@ namespace PetHome.Persistence.Migrations
                     b.HasOne("PetHome.Domain.Pet", "Pet")
                         .WithMany("Stays")
                         .HasForeignKey("PetId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Pet");
                 });
@@ -604,10 +550,9 @@ namespace PetHome.Persistence.Migrations
             modelBuilder.Entity("PetHome.Domain.Transaction", b =>
                 {
                     b.HasOne("PetHome.Domain.Stay", "Stay")
-                        .WithMany()
-                        .HasForeignKey("StayId1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithOne("Transaction")
+                        .HasForeignKey("PetHome.Domain.Transaction", "StayId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Stay");
                 });
@@ -626,7 +571,7 @@ namespace PetHome.Persistence.Migrations
 
             modelBuilder.Entity("PetHome.Domain.Stay", b =>
                 {
-                    b.Navigation("CareActivities");
+                    b.Navigation("Transaction");
                 });
 #pragma warning restore 612, 618
         }

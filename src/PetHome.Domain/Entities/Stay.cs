@@ -1,26 +1,19 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
+﻿
 namespace PetHome.Domain;
 
 public class Stay : BaseEntity
 {
     //Foreign Key
-    public Guid PetId { get; private set; }
-    public Pet Pet { get; private set; }
-    public DateTime CheckInDate { get; private set; }
-    public DateTime CheckOutDate { get; private set; }
-    public StayStatus Status { get; private set; }
-    public decimal DailyRate { get; private set; }
-    public decimal TotalCost { get; private set; }
-    public string Notes { get; private set; }
-    public DateTime CreatedAt { get; private set; }
-    
-    public Guid? TransactionId { get; private set; }
-    [NotMapped]
+    public Guid? PetId { get; private set; }
+    public Pet? Pet { get; private set; }
+    public DateTime? CheckInDate { get; private set; }
+    public DateTime? CheckOutDate { get; private set; }
+    public StayStatus? Status { get; private set; }
+    public decimal? DailyRate { get; private set; }
+    public decimal? TotalCost { get; private set; }
+    public string? Notes { get; private set; }
+    public DateTime? CreatedAt { get; private set; }
     public Transaction? Transaction { get; private set; }
-    
-    private readonly List<CareActivity>? _careActivities = new();
-    public IReadOnlyCollection<CareActivity>? CareActivities => _careActivities.AsReadOnly();
 
     private Stay() { } // EF Core
 
@@ -67,11 +60,4 @@ public class Stay : BaseEntity
             throw new InvalidOperationException("Cannot cancel completed stays");
         Status = StayStatus.Cancelled;
     }
-    
-    public void AddCareActivity(CareActivityType type, string performedBy, string notes = "")
-    {
-        _careActivities.Add(new CareActivity(Id, type, performedBy, notes));
-    }
-
-    public void AssignPayment(Guid paymentId) => TransactionId = paymentId;
 }

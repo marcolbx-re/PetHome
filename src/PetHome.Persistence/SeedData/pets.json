@@ -1,6 +1,6 @@
 ﻿[
   {
-    "PetId": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+    "Id": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
     "Name": "Max",
     "Type": "Dog",
     "Breed": "Golden Retriever",
@@ -9,10 +9,12 @@
     "OwnerId": "11111111-1111-1111-1111-111111111111",
     "Gender": "Male",
     "SpecialInstructions": "No chocolate",
-    "RequiresSpecialDiet": false
+    "RequiresSpecialDiet": false,
+    "IsDeclawed": false,
+    "Size": "Medium"
   },
   {
-    "PetId": "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb",
+    "Id": "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb",
     "Name": "Luna",
     "Type": "Cat",
     "Breed": "Siamese Cat",
@@ -21,7 +23,8 @@
     "OwnerId": "11111111-1111-1111-1111-111111111111",
     "Gender": "Female",
     "SpecialInstructions": "Allergic to fish",
-    "RequiresSpecialDiet": true
+    "RequiresSpecialDiet": true,
+    "IsDeclawed": true
   },
   {
     "PetId": "cccccccc-cccc-cccc-cccc-cccccccccccc",
@@ -33,6 +36,8 @@
     "OwnerId": "22222222-2222-2222-2222-222222222222",
     "Gender": "Male",
     "SpecialInstructions": "",
-    "RequiresSpecialDiet": false
+    "RequiresSpecialDiet": false,
+    "IsDeclawed": false,
+    "Size": "Small"
   }
 ]

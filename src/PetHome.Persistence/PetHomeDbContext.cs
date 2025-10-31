@@ -11,9 +11,8 @@ public class PetHomeDbContext : IdentityDbContext<AppUser>
 {
 	public DbSet<Owner>? Owners {get;set;}
 	public DbSet<Pet>? Pets {get;set;}
-	// public DbSet<Transaction>? Transactions {get;set;}
-	// public DbSet<Stay>? Stays {get;set;}
-	// public DbSet<CareActivity>? Activities {get;set;}
+	public DbSet<Stay>? Stays {get;set;}
+	public DbSet<Transaction>? Transactions {get;set;}
 	public PetHomeDbContext()
 	{
 	}
@@ -24,6 +23,8 @@ public class PetHomeDbContext : IdentityDbContext<AppUser>
 	protected override void OnModelCreating(ModelBuilder modelBuilder) //TODO agregar limite para int, VARCHAR 
 	{
 		base.OnModelCreating(modelBuilder);
+
+		modelBuilder.Entity<Stay>().ToTable("Stays");
 		
 		modelBuilder.Entity<Owner>()
 			.HasMany(o => o.Pets)
@@ -42,24 +43,18 @@ public class PetHomeDbContext : IdentityDbContext<AppUser>
 			.WithOne(m => m.Pet)
 			.HasForeignKey(m => m.PetId)
 			.OnDelete(DeleteBehavior.Cascade);
+
+		modelBuilder.Entity<Stay>()
+			.HasOne(s => s.Transaction)
+			.WithOne(t => t.Stay)
+			.HasForeignKey<Transaction>(t => t.StayId)
+			.OnDelete(DeleteBehavior.NoAction);
 		
-		// modelBuilder.Entity<Stay>()
-		// 	.HasMany(s => s.CareActivities)
-		// 	.WithOne(a => a.Stay)
-		// 	.HasForeignKey(a => a.StayId)
-		// 	.OnDelete(DeleteBehavior.Cascade);
-		//
-		// modelBuilder.Entity<Stay>()
-		// 	.HasOne(s => s.Transaction)
-		// 	.WithOne(p => p.Stay)
-		// 	.HasForeignKey<Transaction>(p => p.StayId)
-		// 	.OnDelete(DeleteBehavior.Restrict);
-		
-		modelBuilder.Entity<Transaction>()
-			.Property(t => t.Metadata)
-			.HasConversion(
-				v => JsonSerializer.Serialize(v, (JsonSerializerOptions?)null),
-				v => JsonSerializer.Deserialize<Dictionary<string, string>>(v, (JsonSerializerOptions?)null)!);
+		// modelBuilder.Entity<Transaction>()
+		// 	.Property(t => t.Metadata)
+		// 	.HasConversion(
+		// 		v => JsonSerializer.Serialize(v, (JsonSerializerOptions?)null),
+		// 		v => JsonSerializer.Deserialize<Dictionary<string, string>>(v, (JsonSerializerOptions?)null)!);
 
 		LoadSecurityData(modelBuilder);
 	}
