@@ -1,4 +1,4 @@
-# 🐾 PetHome
+# 🐾 PetHome (Front Desk & Back Office Project)
 
 ---
 
