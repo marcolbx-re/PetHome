@@ -7,37 +7,40 @@ using PetHome.Application.Stays.GetStay;
 using PetHome.Domain;
 using PetHome.Persistence;
 
-namespace PetHome.Application.Stays.GetStays;
+namespace PetHome.Application.Stays.GetPetStayHistory;
 
-public class GetStaysQuery
+public class GetPetStayHistoryQuery
 {
-    public record GetStaysQueryRequest
-        : IRequest<Result<PagedList<StaySimpleResponse>>>
+	public record GetPetStaysQueryRequest
+        : IRequest<Result<PagedList<PetStayResponse>>>
     {
+        public Guid? PetId { get; set; }
         public GetStayRequest? Request { get; set; }
     }
 
-    internal class GetStaysQueryHandler
-        : IRequestHandler<GetStaysQueryRequest, Result<PagedList<StaySimpleResponse>>>
+    internal class GetPetStaysQueryHandler
+        : IRequestHandler<GetPetStaysQueryRequest, Result<PagedList<PetStayResponse>>>
     {
         private readonly PetHomeDbContext _context;
         private readonly IMapper _mapper;
 
-        public GetStaysQueryHandler(PetHomeDbContext context, IMapper mapper)
+        public GetPetStaysQueryHandler(PetHomeDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
         }
 
-        public async Task<Result<PagedList<StaySimpleResponse>>> Handle(
-            GetStaysQueryRequest request,
+        public async Task<Result<PagedList<PetStayResponse>>> Handle(
+            GetPetStaysQueryRequest request,
             CancellationToken cancellationToken
         )
         {
             IQueryable<Stay> queryable = _context.Stays!;
 
             var predicate = ExpressionBuilder.New<Stay>();
-
+            
+            predicate = predicate
+                .And(y => y.PetId == request.PetId);
             if (request.Request!.Status != null)
             {
                 predicate = predicate
@@ -76,31 +79,34 @@ public class GetStaysQuery
 
             queryable = queryable.Where(predicate);
 
-            IQueryable<StaySimpleResponse> staysQuery = queryable
-                .ProjectTo<StaySimpleResponse>(_mapper.ConfigurationProvider)
+            IQueryable<PetStayResponse> staysQuery = queryable
+                .ProjectTo<PetStayResponse>(_mapper.ConfigurationProvider)
                 .AsQueryable();
 
-            var pagination = await PagedList<StaySimpleResponse>
+            var pagination = await PagedList<PetStayResponse>
                 .CreateAsync(staysQuery,
                     request.Request.PageNumber,
                     request.Request.PageSize
                 );
 
-            return Result<PagedList<StaySimpleResponse>>.Success(pagination);
+            return Result<PagedList<PetStayResponse>>.Success(pagination);
         }
     }
 }
 
-public record StaySimpleResponse(
+public record PetStayResponse(
     Guid? Id,
     Guid? PetId,
     DateTime? CheckInDate,
     DateTime? CheckOutDate,
     Stay.StayStatus? Status,
+    decimal? DailyRate,
     decimal? TotalCost,
+    string? Notes,
+    DateTime? CreatedAt,
     Guid? TransactionId)
 {
-    public StaySimpleResponse() : this(null, null,null,null,null,null,null)
+    public PetStayResponse() : this(null, null, null, null, null,null,null,null,null,null)
     {
     }
 }

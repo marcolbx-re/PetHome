@@ -8,10 +8,10 @@ using PetHome.Application.Stays.GetStays;
 using PetHome.Application.Stays.PostStay;
 using PetHome.Domain;
 
-namespace PetHome.WebApi.Controllers;
+namespace PetHome.WebApi.Controllers.BackOffice;
 
 [ApiController]
-[Route("api/pets/{petId}/stays")]
+[Route("api")]
 public class StaysController : ControllerBase
 {
 	private readonly ISender _sender;
@@ -22,9 +22,9 @@ public class StaysController : ControllerBase
 	}
 	
 	[AllowAnonymous]
-	[HttpGet]
+	[HttpGet("stays")]
 	[ProducesResponseType((int)HttpStatusCode.OK)]
-	public async Task<ActionResult<PagedList<StayResponse>>> PaginationStay
+	public async Task<ActionResult<PagedList<StaySimpleResponse>>> PaginationStay
 	(
 		[FromQuery] GetStayRequest request,
 		CancellationToken cancellationToken
@@ -33,12 +33,12 @@ public class StaysController : ControllerBase
 		var query = new GetStaysQuery.GetStaysQueryRequest {
 			Request = request
 		};
-		Result<PagedList<StayResponse>> result =  await _sender.Send(query, cancellationToken);
+		Result<PagedList<StaySimpleResponse>> result =  await _sender.Send(query, cancellationToken);
 		return result.IsSuccess ? Ok(result.Value) : NotFound();
 	}
 	
 	[Authorize(Policy = PolicyMaster.PET_CREATE)]
-	[HttpPost]
+	[HttpPost("/pets/{petId}/stays")]
 	[ProducesResponseType((int)HttpStatusCode.OK)]
 	public async Task<ActionResult<Result<Guid>>> StayCreate(
 		[FromRoute] Guid petId,
