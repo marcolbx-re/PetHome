@@ -1,4 +1,6 @@
-﻿namespace PetHome.Domain;
+﻿using System.Text.Json.Serialization;
+
+namespace PetHome.Domain;
 
 public class Transaction : BaseEntity
 {
@@ -6,10 +8,10 @@ public class Transaction : BaseEntity
 	public Stay? Stay { get; protected set; }
 	public decimal? Amount { get; protected set; }
 	public PaymentMethod? PaymentMethod { get; private set; }
-	public DateTime? CreatedAt { get; private set; }
-	public TransactionStatus? Status { get; private set; }
-	public string? Reference { get; private set; }
-	//public Dictionary<string, string> Metadata { get; private set; }
+	public DateTime? CreatedAt { get; protected set; }
+	public TransactionStatus? Status { get; protected set; }
+	public string? Reference { get; protected set; }
+	//public Dictionary<string, string> Metadata { get; protected set; }
 
 	protected Transaction() { } // EF Core
 
@@ -54,6 +56,7 @@ public class Transaction : BaseEntity
 
 }
 
+[JsonConverter(typeof(JsonStringEnumConverter))]
 public enum TransactionStatus
 {
 	Pending,
@@ -62,6 +65,7 @@ public enum TransactionStatus
 	Refunded
 }
 
+[JsonConverter(typeof(JsonStringEnumConverter))]
 public enum PaymentMethod
 {
 	NotSet = 0,

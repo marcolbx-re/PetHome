@@ -46,7 +46,6 @@ public class GetStayQuery
 public record StayResponse(
 	Guid? Id,
 	Guid? PetId,
-	Pet? Pet,
 	DateTime? CheckInDate,
 	DateTime? CheckOutDate,
 	Stay.StayStatus? Status,
@@ -54,10 +53,9 @@ public record StayResponse(
 	decimal? TotalCost,
 	string? Notes,
 	DateTime? CreatedAt,
-	Guid? TransactionId,
-	Transaction? Transaction)
+	Guid? TransactionId)
 {
-	public StayResponse() : this(null, null, null, null, null, null, null,null,null,null,null,null)
+	public StayResponse() : this(null, null, null, null, null,null,null,null,null,null)
 	{
 	}
 }

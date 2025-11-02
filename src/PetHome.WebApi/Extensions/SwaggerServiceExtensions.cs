@@ -29,6 +29,8 @@ public static class SwaggerServiceExtensions
 				}
 			};         
 			c.AddSecurityRequirement(securityRequirement);
+			c.UseInlineDefinitionsForEnums();
+
 		});
 		
 		return services;

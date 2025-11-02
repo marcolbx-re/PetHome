@@ -1,4 +1,6 @@
-﻿namespace PetHome.Domain;
+﻿using System.Text.Json.Serialization;
+
+namespace PetHome.Domain;
 
 public class Pet : BaseEntity
 {
@@ -43,12 +45,15 @@ public class Pet : BaseEntity
 		return 0;
 	}
 }
+
+[JsonConverter(typeof(JsonStringEnumConverter))]
 public enum GenderType
 {
 	Male = 1,
 	Female = 2
 }
 
+[JsonConverter(typeof(JsonStringEnumConverter))]
 public enum PetType
 {
 	None = 0,
@@ -56,6 +61,7 @@ public enum PetType
 	Cat = 2,
 }
 
+[JsonConverter(typeof(JsonStringEnumConverter))]
 public enum Size
 {
 	Small = 0,

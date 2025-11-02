@@ -1,19 +1,21 @@
 ﻿
+using System.Text.Json.Serialization;
+
 namespace PetHome.Domain;
 
 public class Stay : BaseEntity
 {
     //Foreign Key
-    public Guid? PetId { get; private set; }
-    public Pet? Pet { get; private set; }
-    public DateTime? CheckInDate { get; private set; }
-    public DateTime? CheckOutDate { get; private set; }
-    public StayStatus? Status { get; private set; }
-    public decimal? DailyRate { get; private set; }
-    public decimal? TotalCost { get; private set; }
-    public string? Notes { get; private set; }
-    public DateTime? CreatedAt { get; private set; }
-    public Transaction? Transaction { get; private set; }
+    public Guid? PetId { get; set; }
+    public Pet? Pet { get;  set; }
+    public DateTime? CheckInDate { get; set; }
+    public DateTime? CheckOutDate { get;  set; }
+    public StayStatus? Status { get; set; }
+    public decimal? DailyRate { get; set; }
+    public decimal? TotalCost { get; set; }
+    public string? Notes { get; set; }
+    public DateTime? CreatedAt { get; set; }
+    public Transaction? Transaction { get; set; }
 
     private Stay() { } // EF Core
 
@@ -32,6 +34,7 @@ public class Stay : BaseEntity
         TotalCost = dailyRate * days;
     }
     
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum StayStatus
     {
         Scheduled,

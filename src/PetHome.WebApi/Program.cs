@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Newtonsoft.Json.Converters;
 using PetHome.Application;
 using PetHome.Application.Interfaces;
 using PetHome.Infrastructure;
@@ -20,10 +21,11 @@ builder.Services.AddScoped(typeof(IReportService<>), typeof(ReportService<>));
 builder.Services.AddInfrastructure();
 builder.Services.AddOpenApi();
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddControllers().AddNewtonsoftJson().AddJsonOptions(options =>
-{
-    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-});
+builder.Services.AddControllers()
+    .AddNewtonsoftJson(options =>
+    {
+        options.SerializerSettings.Converters.Add(new StringEnumConverter());
+    });
 builder.Services.AddSwaggerDocumentation();
 builder.Services.AddCors(o => o.AddPolicy("corsapp", builder =>
 {

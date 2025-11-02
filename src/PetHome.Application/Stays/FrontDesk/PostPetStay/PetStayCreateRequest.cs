@@ -1,10 +1,9 @@
 ﻿using PetHome.Domain;
 
-namespace PetHome.Application.Stays.PostStay;
+namespace PetHome.Application.Stays.FrontDesk.PostPetStay;
 
-public class StayCreateRequest
+public class PetStayCreateRequest
 {
-	//public Guid PetId { get; set; }
 	public DateTime CheckInDate { get; set; }
 	public DateTime CheckOutDate { get; set; }
 	public Stay.StayStatus Status { get; set; }

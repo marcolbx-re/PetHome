@@ -9,7 +9,7 @@ namespace PetHome.Application.Stays.PostStay;
 
 public class StayCreateCommand
 {
-	public record StayCreateCommandRequest(Guid PetId, StayCreateRequest StayCreateRequest)
+	public record StayCreateCommandRequest(StayCreateRequest StayCreateRequest)
 		: IRequest<Result<Guid>>, ICommandBase;
 	
 	internal class StayCreateCommandHandler
@@ -30,13 +30,11 @@ public class StayCreateCommand
 		)
 		{
 			var dto = request.StayCreateRequest;
-			var stay = new Stay(request.PetId, dto.CheckInDate, dto.CheckOutDate, dto.DailyRate);
+			var stay = new Stay(dto.PetId, dto.CheckInDate, dto.CheckOutDate, dto.DailyRate);
 			_context.Add(stay);
-			//await _context.Stays!.AddAsync(stay, cancellationToken);
 
 			var transaction = new Transaction((decimal)stay.TotalCost!, PaymentMethod.NotSet, stay);
 			_context.Add(transaction);
-			//await _context.Transactions!.AddAsync(transaction, cancellationToken);
 
 			try
 			{

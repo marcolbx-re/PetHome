@@ -7,6 +7,8 @@ public class StayCreateValidator: AbstractValidator<StayCreateRequest>
 {
 	public StayCreateValidator()
 	{
+		RuleFor(p => p.PetId).NotEmpty()
+			.WithMessage("Se debe colocar un PetId");
 		RuleFor(p => p.DailyRate).NotEmpty()
 			.WithMessage("Se debe colocar un costo diario");
 		RuleFor(p => p.CheckInDate).NotEmpty()
