@@ -1,7 +1,10 @@
 ﻿using System.Linq.Expressions;
+using System.Security.Claims;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using PetHome.Application.Core;
 using PetHome.Application.Stays.GetStay;
 using PetHome.Domain;
@@ -23,11 +26,13 @@ public class GetPetStayHistoryQuery
     {
         private readonly PetHomeDbContext _context;
         private readonly IMapper _mapper;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public GetPetStaysQueryHandler(PetHomeDbContext context, IMapper mapper)
+        public GetPetStaysQueryHandler(PetHomeDbContext context, IMapper mapper, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
             _mapper = mapper;
+            _httpContextAccessor =  httpContextAccessor;
         }
 
         public async Task<Result<PagedList<PetStayResponse>>> Handle(
@@ -35,6 +40,23 @@ public class GetPetStayHistoryQuery
             CancellationToken cancellationToken
         )
         {
+            var jwtOwnerId = _httpContextAccessor.HttpContext?.User?.FindFirstValue("ownerId");
+            if (jwtOwnerId is null)
+                return Result<PagedList<PetStayResponse>>.Failure("Unauthorized");
+
+            // Fetch pet’s owner
+            var pet = await _context.Pets
+                .Where(p => p.Id == request.PetId)
+                .Select(p => new { p.OwnerId })
+                .FirstOrDefaultAsync(cancellationToken);
+
+            if (pet is null)
+                return Result<PagedList<PetStayResponse>>.Failure("Pet not found");
+
+            if (pet.OwnerId.ToString() != jwtOwnerId)
+                return Result<PagedList<PetStayResponse>>.Failure("Forbidden");
+
+            // ✅ Authorized, proceed
             IQueryable<Stay> queryable = _context.Stays!;
 
             var predicate = ExpressionBuilder.New<Stay>();

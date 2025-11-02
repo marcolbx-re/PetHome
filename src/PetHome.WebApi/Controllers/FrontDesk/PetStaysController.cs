@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Security.Claims;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -38,7 +39,7 @@ public class PetStaysController : ControllerBase
 		return result.IsSuccess ? Ok(result.Value) : NotFound();
 	}
 	
-	[Authorize(Policy = PolicyMaster.PET_CREATE)]
+	[AllowAnonymous]
 	[HttpPost("{petId}/stays")]
 	[ProducesResponseType((int)HttpStatusCode.OK)]
 	public async Task<ActionResult<Result<Guid>>> StayCreate(

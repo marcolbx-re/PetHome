@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Security.Claims;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +19,7 @@ public class OwnerPetsController : ControllerBase
 		_sender = sender;
 	}
 
-	[AllowAnonymous]
+	[Authorize]
 	[HttpGet("{ownerId:guid}/pets")]
 	[ProducesResponseType((int)HttpStatusCode.OK)]
 	public async Task<ActionResult<PagedList<OwnerPetResponse>>> PetStaysGet(
@@ -27,6 +28,12 @@ public class OwnerPetsController : ControllerBase
 		CancellationToken cancellationToken
 	)
 	{
+		// Extract ownerId from JWT
+		var jwtOwnerId = User.FindFirstValue("ownerId"); // System.Security.Claims
+		if (jwtOwnerId == null)
+			return Unauthorized("Token is missing ownerId claim.");
+		if (ownerId.ToString() != jwtOwnerId)
+			return Forbid("You are not authorized to access this owner's pets.");
 		var query = new GetOwnerPetsQuery.GetOwnerPetsQueryRequest
 		{
 			Request = request,
