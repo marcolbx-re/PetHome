@@ -2,6 +2,7 @@
 using MediatR;
 using PetHome.Application.Core;
 using PetHome.Persistence;
+using PetHome.Persistence.Models;
 
 namespace PetHome.Application.Owner.OwnerCreate;
 
@@ -28,12 +29,13 @@ public class OwnerCreateCommand
         )
         {
             var dto = request.OwnerCreateRequest;
+            
             var owner = new Domain.Owner(dto.FirstName, dto.LastName, dto.Email,
-                dto.PhoneNumber, dto.IsNewsletterSubscribed, dto.IdentificationType, dto.IdentificationNumber);
+                dto.PhoneNumber, dto.IsNewsletterSubscribed, dto.IdentificationType, dto.IdentificationNumber, null);
             _context.Add(owner);
 
-            var resultado = await _context.SaveChangesAsync(cancellationToken) > 0;
-            return resultado 
+            var result = await _context.SaveChangesAsync(cancellationToken) > 0;
+            return result 
                         ? Result<Guid>.Success(owner.Id)
                         : Result<Guid>.Failure("No se pudo insertar el Owner");
         }

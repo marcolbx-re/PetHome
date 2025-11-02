@@ -26,6 +26,12 @@ public class PetHomeDbContext : IdentityDbContext<AppUser>
 
 		modelBuilder.Entity<Stay>().ToTable("Stays");
 		
+		modelBuilder.Entity<AppUser>()
+			.HasOne(u => u.Owner)               // an AppUser *may have* an Owner
+			.WithOne(o => o.AppUser)            // each Owner *must have* an AppUser
+			.HasForeignKey<Owner>(o => o.AppUserId)
+			.OnDelete(DeleteBehavior.Cascade);
+		
 		modelBuilder.Entity<Owner>()
 			.HasMany(o => o.Pets)
 			.WithOne(p => p.Owner)
@@ -63,6 +69,7 @@ public class PetHomeDbContext : IdentityDbContext<AppUser>
     {
         var adminId = Guid.NewGuid().ToString();
         var clientId = Guid.NewGuid().ToString();
+        var ownerId = Guid.NewGuid().ToString();
 
         modelBuilder.Entity<IdentityRole>().HasData(
             new IdentityRole {
@@ -78,6 +85,14 @@ public class PetHomeDbContext : IdentityDbContext<AppUser>
                 Name = CustomRoles.CLIENT,
                 NormalizedName = CustomRoles.CLIENT
             }
+        );
+        
+        modelBuilder.Entity<IdentityRole>().HasData(
+	        new IdentityRole {
+		        Id = ownerId,
+		        Name = CustomRoles.OWNER,
+		        NormalizedName = CustomRoles.OWNER
+	        }
         );
     
         modelBuilder.Entity<IdentityRoleClaim<string>>()

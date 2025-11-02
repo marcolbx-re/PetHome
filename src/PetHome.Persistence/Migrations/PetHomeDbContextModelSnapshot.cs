@@ -45,15 +45,21 @@ namespace PetHome.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "0ecf5104-d94b-4b11-99a4-b293c69633ce",
+                            Id = "980d853b-be2a-42bf-a54c-6987e49a6fff",
                             Name = "ADMIN",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "b7d8a3ab-6bcc-402a-948a-858349e56232",
+                            Id = "eb92adfc-a4ce-4728-972f-718586f24493",
                             Name = "CLIENT",
                             NormalizedName = "CLIENT"
+                        },
+                        new
+                        {
+                            Id = "19d91d4a-f85a-4916-b8a6-152eb9dcbef2",
+                            Name = "OWNER",
+                            NormalizedName = "OWNER"
                         });
                 });
 
@@ -85,63 +91,63 @@ namespace PetHome.Persistence.Migrations
                             Id = 1,
                             ClaimType = "POLICIES",
                             ClaimValue = "OWNER_READ",
-                            RoleId = "0ecf5104-d94b-4b11-99a4-b293c69633ce"
+                            RoleId = "980d853b-be2a-42bf-a54c-6987e49a6fff"
                         },
                         new
                         {
                             Id = 2,
                             ClaimType = "POLICIES",
                             ClaimValue = "OWNER_UPDATE",
-                            RoleId = "0ecf5104-d94b-4b11-99a4-b293c69633ce"
+                            RoleId = "980d853b-be2a-42bf-a54c-6987e49a6fff"
                         },
                         new
                         {
                             Id = 3,
                             ClaimType = "POLICIES",
                             ClaimValue = "OWNER_CREATE",
-                            RoleId = "0ecf5104-d94b-4b11-99a4-b293c69633ce"
+                            RoleId = "980d853b-be2a-42bf-a54c-6987e49a6fff"
                         },
                         new
                         {
                             Id = 4,
                             ClaimType = "POLICIES",
                             ClaimValue = "OWNER_DELETE",
-                            RoleId = "0ecf5104-d94b-4b11-99a4-b293c69633ce"
+                            RoleId = "980d853b-be2a-42bf-a54c-6987e49a6fff"
                         },
                         new
                         {
                             Id = 5,
                             ClaimType = "POLICIES",
                             ClaimValue = "PET_CREATE",
-                            RoleId = "0ecf5104-d94b-4b11-99a4-b293c69633ce"
+                            RoleId = "980d853b-be2a-42bf-a54c-6987e49a6fff"
                         },
                         new
                         {
                             Id = 6,
                             ClaimType = "POLICIES",
                             ClaimValue = "PET_READ",
-                            RoleId = "0ecf5104-d94b-4b11-99a4-b293c69633ce"
+                            RoleId = "980d853b-be2a-42bf-a54c-6987e49a6fff"
                         },
                         new
                         {
                             Id = 7,
                             ClaimType = "POLICIES",
                             ClaimValue = "PET_UPDATE",
-                            RoleId = "0ecf5104-d94b-4b11-99a4-b293c69633ce"
+                            RoleId = "980d853b-be2a-42bf-a54c-6987e49a6fff"
                         },
                         new
                         {
                             Id = 8,
                             ClaimType = "POLICIES",
                             ClaimValue = "OWNER_READ",
-                            RoleId = "b7d8a3ab-6bcc-402a-948a-858349e56232"
+                            RoleId = "eb92adfc-a4ce-4728-972f-718586f24493"
                         },
                         new
                         {
                             Id = 9,
                             ClaimType = "POLICIES",
                             ClaimValue = "PET_READ",
-                            RoleId = "b7d8a3ab-6bcc-402a-948a-858349e56232"
+                            RoleId = "eb92adfc-a4ce-4728-972f-718586f24493"
                         });
                 });
 
@@ -230,6 +236,10 @@ namespace PetHome.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("AppUserId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("TEXT");
 
@@ -255,6 +265,9 @@ namespace PetHome.Persistence.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AppUserId")
+                        .IsUnique();
 
                     b.ToTable("Owners");
                 });
@@ -514,6 +527,17 @@ namespace PetHome.Persistence.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("PetHome.Domain.Owner", b =>
+                {
+                    b.HasOne("PetHome.Persistence.Models.AppUser", "AppUser")
+                        .WithOne("Owner")
+                        .HasForeignKey("PetHome.Domain.Owner", "AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+                });
+
             modelBuilder.Entity("PetHome.Domain.Pet", b =>
                 {
                     b.HasOne("PetHome.Domain.Owner", "Owner")
@@ -569,6 +593,11 @@ namespace PetHome.Persistence.Migrations
             modelBuilder.Entity("PetHome.Domain.Stay", b =>
                 {
                     b.Navigation("Transaction");
+                });
+
+            modelBuilder.Entity("PetHome.Persistence.Models.AppUser", b =>
+                {
+                    b.Navigation("Owner");
                 });
 #pragma warning restore 612, 618
         }

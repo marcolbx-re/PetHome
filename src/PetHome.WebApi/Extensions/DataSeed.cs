@@ -41,6 +41,16 @@ public static class DataSeed
 
                 await userManager.CreateAsync(userClient, "Password123$");
                 await userManager.AddToRoleAsync(userClient, CustomRoles.CLIENT);
+                
+                var ownerClient = new AppUser
+                {
+                    FullName = "Apellido",
+                    UserName = "Nombre",
+                    Email = "nombre.apellido@gmail.com"
+                };
+                
+                await userManager.CreateAsync(ownerClient, "Password123$");
+                await userManager.AddToRoleAsync(ownerClient, CustomRoles.OWNER);
             }
             await context.SaveChangesAsync();
 

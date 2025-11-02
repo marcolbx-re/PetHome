@@ -22,6 +22,7 @@ public static class SeedDatabase
 
             var adminId = "d3b07384-d9a0-4c9b-8a0d-1b2e2b3c4d5e";
             var clientId = "e4b07384-d9a0-4c9b-8a0d-1b2e2b3c4d5f";
+            var ownerId = "f4b07384-f9a0-4f9b-8f0d-1b2e2b3c4d5f";
 
             var roleAdmin = new IdentityRole
             {
@@ -36,6 +37,13 @@ public static class SeedDatabase
                 Name = CustomRoles.CLIENT,
                 NormalizedName = CustomRoles.CLIENT.ToUpperInvariant()
             };
+            
+            var roleOwner = new IdentityRole
+            {
+	            Id = ownerId,
+	            Name = CustomRoles.OWNER,
+	            NormalizedName = CustomRoles.OWNER.ToUpperInvariant()
+            };
 
             if (!await roleManager.RoleExistsAsync(CustomRoles.ADMIN))
             {
@@ -45,6 +53,11 @@ public static class SeedDatabase
             if (!await roleManager.RoleExistsAsync(CustomRoles.CLIENT))
             {
                 await roleManager.CreateAsync(roleClient);
+            }
+            
+            if (!await roleManager.RoleExistsAsync(CustomRoles.OWNER))
+            {
+	            await roleManager.CreateAsync(roleOwner);
             }
 
             var userAdmin = new AppUser

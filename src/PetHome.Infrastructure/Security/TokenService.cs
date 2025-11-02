@@ -1,6 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -15,11 +16,13 @@ public class TokenService: ITokenService
 {
 	private readonly PetHomeDbContext _context;
 	private readonly IConfiguration _configuration;
+	private readonly UserManager<AppUser> _userManager;
 
-	public TokenService(PetHomeDbContext context, IConfiguration configuration)
+	public TokenService(PetHomeDbContext context, IConfiguration configuration, UserManager<AppUser> userManager)
 	{
 		_context = context;
 		_configuration = configuration;
+		_userManager =  userManager;
 	}
 
 	public async Task<string> CreateToken(AppUser user)
@@ -49,6 +52,18 @@ public class TokenService: ITokenService
 				claims.Add(new (CustomClaims.POLICIES, policy));
 			}
 		}
+		
+		var roles = await _userManager.GetRolesAsync(user);
+		// Add OwnerId if user is an owner
+		if (roles.Contains(CustomRoles.OWNER))
+		{
+			var owner = await _context.Owners!
+				.FirstOrDefaultAsync(o => o.AppUserId == user.Id);
+
+			if (owner != null)
+				claims.Add(new Claim("ownerId", owner.Id.ToString()));
+		}
+
 
 		var creds = new SigningCredentials(
 			new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["TokenKey"]!)),

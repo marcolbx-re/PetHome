@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PetHome.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class MyMigration01 : Migration
+    public partial class MyMigration10 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -51,25 +51,6 @@ namespace PetHome.Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Owners",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    FirstName = table.Column<string>(type: "TEXT", nullable: true),
-                    LastName = table.Column<string>(type: "TEXT", nullable: true),
-                    Email = table.Column<string>(type: "TEXT", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "TEXT", nullable: true),
-                    IsNewsletterSubscribed = table.Column<bool>(type: "INTEGER", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    IdentificationType = table.Column<int>(type: "INTEGER", nullable: false),
-                    IdentificationNumber = table.Column<string>(type: "TEXT", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Owners", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -179,6 +160,32 @@ namespace PetHome.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Owners",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    AppUserId = table.Column<string>(type: "TEXT", nullable: false),
+                    FirstName = table.Column<string>(type: "TEXT", nullable: true),
+                    LastName = table.Column<string>(type: "TEXT", nullable: true),
+                    Email = table.Column<string>(type: "TEXT", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "TEXT", nullable: true),
+                    IsNewsletterSubscribed = table.Column<bool>(type: "INTEGER", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    IdentificationType = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdentificationNumber = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Owners", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Owners_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Pets",
                 columns: table => new
                 {
@@ -278,8 +285,9 @@ namespace PetHome.Persistence.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "0ecf5104-d94b-4b11-99a4-b293c69633ce", null, "ADMIN", "ADMIN" },
-                    { "b7d8a3ab-6bcc-402a-948a-858349e56232", null, "CLIENT", "CLIENT" }
+                    { "19d91d4a-f85a-4916-b8a6-152eb9dcbef2", null, "OWNER", "OWNER" },
+                    { "980d853b-be2a-42bf-a54c-6987e49a6fff", null, "ADMIN", "ADMIN" },
+                    { "eb92adfc-a4ce-4728-972f-718586f24493", null, "CLIENT", "CLIENT" }
                 });
 
             migrationBuilder.InsertData(
@@ -287,15 +295,15 @@ namespace PetHome.Persistence.Migrations
                 columns: new[] { "Id", "ClaimType", "ClaimValue", "RoleId" },
                 values: new object[,]
                 {
-                    { 1, "POLICIES", "OWNER_READ", "0ecf5104-d94b-4b11-99a4-b293c69633ce" },
-                    { 2, "POLICIES", "OWNER_UPDATE", "0ecf5104-d94b-4b11-99a4-b293c69633ce" },
-                    { 3, "POLICIES", "OWNER_CREATE", "0ecf5104-d94b-4b11-99a4-b293c69633ce" },
-                    { 4, "POLICIES", "OWNER_DELETE", "0ecf5104-d94b-4b11-99a4-b293c69633ce" },
-                    { 5, "POLICIES", "PET_CREATE", "0ecf5104-d94b-4b11-99a4-b293c69633ce" },
-                    { 6, "POLICIES", "PET_READ", "0ecf5104-d94b-4b11-99a4-b293c69633ce" },
-                    { 7, "POLICIES", "PET_UPDATE", "0ecf5104-d94b-4b11-99a4-b293c69633ce" },
-                    { 8, "POLICIES", "OWNER_READ", "b7d8a3ab-6bcc-402a-948a-858349e56232" },
-                    { 9, "POLICIES", "PET_READ", "b7d8a3ab-6bcc-402a-948a-858349e56232" }
+                    { 1, "POLICIES", "OWNER_READ", "980d853b-be2a-42bf-a54c-6987e49a6fff" },
+                    { 2, "POLICIES", "OWNER_UPDATE", "980d853b-be2a-42bf-a54c-6987e49a6fff" },
+                    { 3, "POLICIES", "OWNER_CREATE", "980d853b-be2a-42bf-a54c-6987e49a6fff" },
+                    { 4, "POLICIES", "OWNER_DELETE", "980d853b-be2a-42bf-a54c-6987e49a6fff" },
+                    { 5, "POLICIES", "PET_CREATE", "980d853b-be2a-42bf-a54c-6987e49a6fff" },
+                    { 6, "POLICIES", "PET_READ", "980d853b-be2a-42bf-a54c-6987e49a6fff" },
+                    { 7, "POLICIES", "PET_UPDATE", "980d853b-be2a-42bf-a54c-6987e49a6fff" },
+                    { 8, "POLICIES", "OWNER_READ", "eb92adfc-a4ce-4728-972f-718586f24493" },
+                    { 9, "POLICIES", "PET_READ", "eb92adfc-a4ce-4728-972f-718586f24493" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -333,6 +341,12 @@ namespace PetHome.Persistence.Migrations
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Owners_AppUserId",
+                table: "Owners",
+                column: "AppUserId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -385,9 +399,6 @@ namespace PetHome.Persistence.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
                 name: "Stays");
 
             migrationBuilder.DropTable(
@@ -395,6 +406,9 @@ namespace PetHome.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "Owners");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
         }
     }
 }

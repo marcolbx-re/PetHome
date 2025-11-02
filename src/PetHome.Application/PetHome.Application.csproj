@@ -30,6 +30,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Accounts\Back Office\" />
       <Folder Include="Pets\FrontDesk\GetOwnerPet\" />
     </ItemGroup>
 

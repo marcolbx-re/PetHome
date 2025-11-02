@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
+using PetHome.Persistence.Models;
 
 namespace PetHome.Domain;
 
@@ -13,6 +14,8 @@ public enum IdentificationType
 // Domain/Entities/Owner.cs
 public class Owner : BaseEntity
 {
+	public string AppUserId { get; set; }   // FK to IdentityUser
+	public AppUser AppUser { get; set; }
 	public string? FirstName { get; set; }
 	public string? LastName { get; set; }
 	public string? Email { get; set; }
@@ -34,7 +37,8 @@ public class Owner : BaseEntity
 	private Owner() { } // EF Core
 
 	public Owner(string firstName, string lastName, string email, 
-		string phoneNumber, bool isNewsletterSubscribed, IdentificationType identificationType, string identificationNumber)
+		string phoneNumber, bool isNewsletterSubscribed, IdentificationType identificationType,
+		string identificationNumber, AppUser appUser)
 	{
 		Id = Guid.NewGuid();
 		FirstName = firstName;
@@ -45,6 +49,8 @@ public class Owner : BaseEntity
 		CreatedAt = DateTime.UtcNow;
 		IdentificationType = identificationType;
 		IdentificationNumber = identificationNumber;
+		AppUserId = appUser.Id;
+		AppUser = appUser;
 	}
 
 	public void SubscribeToNewsletter() => IsNewsletterSubscribed = true;
