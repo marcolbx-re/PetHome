@@ -36,13 +36,19 @@ Este proyecto demuestra prácticas modernas de desarrollo backend con un enfoque
 ### 📝 Instrucciones
 - Un dueño (**Owner**) tiene 1 o varias mascotas (**Pets**). 
 - Cada **Pet** puede tener mas de una estancia temporal (**Stay**).
-- Y cada **Stay** tiene una transaccion (**Transaction**)
+- Y cada **Stay** tiene una transaccion (**Transaction**).
+
+
 1) Puedes usar swagger para ver los Rest APIs: http://localhost:5001/swagger/index.html
 2) Usa el login con los siguientes credenciales: admin@gmail.com y Password123$
 3) Usa el JsonWebToken que obtienes del response para colocarlo en el Authorize. Presiona Login y ahora tienes permisos de administrador.
 4) Con los permisos de administrador puedes hacer uso de todos los Endpoints. CRUD.
 5) Si quieres revisar como funciona la permisologia, registra un nuevo usuario y usa ese login para usar los Endpoints. Ese nuevo usuario no va a poder modificar, crear o eliminar.
 
+
+⚠️Los siguientes endpoints solo funcionaran si el usuario con ese ownerId esta loggeado, de tal manera que ningun otro usuario pueda ver la data de otro usuario:
+- **/api/owners/{ownerId}/pets**
+- **/api/pets/{petId}/stays**
 ---
 
 ## 🇺🇸 Description (English)
@@ -83,4 +89,9 @@ An (**Owner**) has one or more (**Pets**). Every **Pet** can stay once or more a
 3) Use the JSON Web Token you get from the response to place it in Authorize. Press Login and now you have administrator permissions.
 4) With administrator permissions, you can use all the endpoints. CRUD operations are available.
 5) If you want to see how the permission system works, register a new user and use that login to access the other endpoints. They will not be able to modify, create, or delete.
+
+
+⚠️The following endpoints will only work if the logged in user is the same with the ownerId or if he owns the pet with the petId:
+- **/api/owners/{ownerId}/pets**
+- **/api/pets/{petId}/stays**
 
