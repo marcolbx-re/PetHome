@@ -36,10 +36,10 @@ Este proyecto demuestra prácticas modernas de desarrollo backend con un enfoque
 ### 📝 Instrucciones
 - Un dueño (**Owner**) tiene 1 o varias mascotas (**Pets**). 
 - Cada **Pet** puede tener mas de una estancia temporal (**Stay**).
-- Y cada **Stay** tiene una transaccion (**Transaction**)
-  Los siguientes endpoints solo funcionaran si el usuario con ese ownerId esta loggeado, de tal manera que ningun otro usuario pueda ver la data de otro usuario:
+- Y cada **Stay** tiene una transaccion (**Transaction**).
+- **Los siguientes endpoints solo funcionaran si el usuario con ese ownerId esta loggeado, de tal manera que ningun otro usuario pueda ver la data de otro usuario:
 - /api/owners/{ownerId}/pets
-- /api/pets/{petId}/stays
+- /api/pets/{petId}/stays**
 1) Puedes usar swagger para ver los Rest APIs: http://localhost:5001/swagger/index.html
 2) Usa el login con los siguientes credenciales: admin@gmail.com y Password123$
 3) Usa el JsonWebToken que obtienes del response para colocarlo en el Authorize. Presiona Login y ahora tienes permisos de administrador.
