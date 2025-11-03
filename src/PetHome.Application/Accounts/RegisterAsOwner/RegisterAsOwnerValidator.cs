@@ -16,8 +16,8 @@ public class RegisterAsOwnerValidator : AbstractValidator<RegisterAsOwnerRequest
 			.WithMessage("El apellido esta en blanco");
 		RuleFor(x => x.IdentificationNumber).NotEmpty()
 			.WithMessage("El Id esta en blanco");
-		RuleFor(x => x.IdentificationType).NotEmpty()
-			.WithMessage("El tipo de Id esta en blanco");
+		// RuleFor(x => x.IdentificationType).NotEmpty()
+		// 	.WithMessage("El tipo de identification esta en blanco");
 		RuleFor(x => x.PhoneNumber).NotEmpty()
 			.WithMessage("El telefono esta en blanco");
 	}

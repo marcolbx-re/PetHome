@@ -3,6 +3,7 @@ using Newtonsoft.Json.Converters;
 using PetHome.Application;
 using PetHome.Application.Interfaces;
 using PetHome.Infrastructure;
+using PetHome.Infrastructure.Email;
 using PetHome.Infrastructure.Photos;
 using PetHome.Infrastructure.Reports;
 using PetHome.Persistence;
@@ -17,6 +18,7 @@ builder.Services.AddPoliciesServices();
 builder.Services
     .Configure<CloudinarySettings>(builder.Configuration.GetSection(nameof(CloudinarySettings)));
 builder.Services.AddScoped<IPhotoService, PhotoService>();
+builder.Services.AddTransient<IEmailService, SmtpEmailService>();
 builder.Services.AddScoped(typeof(IReportService<>), typeof(ReportService<>));
 builder.Services.AddInfrastructure();
 builder.Services.AddOpenApi();

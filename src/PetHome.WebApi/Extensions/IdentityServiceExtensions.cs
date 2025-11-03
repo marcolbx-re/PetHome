@@ -20,7 +20,10 @@ public static class IdentityServiceExtensions
 		{
 			opt.Password.RequireNonAlphanumeric = false;
 			opt.User.RequireUniqueEmail = true;
-		}).AddRoles<IdentityRole>().AddEntityFrameworkStores<PetHomeDbContext>();
+		}).AddRoles<IdentityRole>()
+			.AddEntityFrameworkStores<PetHomeDbContext>()
+			.AddDefaultTokenProviders();
+
 
 		services.AddScoped<ITokenService, TokenService>();
 		services.AddScoped<IUserAccessor, UserAccessor>();

@@ -13,11 +13,13 @@ namespace PetHome.WebApi.Controllers.FrontDesk;
 public class CustomerOwnersController : ControllerBase
 {
 	private readonly ISender _sender;
+	private readonly IConfiguration _configuration;
 	private readonly IUserAccessor _user;
-	public CustomerOwnersController(ISender sender, IUserAccessor user)
+	public CustomerOwnersController(ISender sender, IUserAccessor user, IConfiguration configuration)
 	{
 		_sender = sender;
 		_user = user;
+		_configuration = configuration;
 	}
 
 	// [AllowAnonymous]
@@ -42,7 +44,8 @@ public class CustomerOwnersController : ControllerBase
 		CancellationToken cancellationToken
 	)
 	{
-		var command = new RegisterAsOwnerCommand.RegisterOwnerCommandRequest(request);
+		var callbackBaseUrl = $"{_configuration["Frontend:BaseUrl"]}/set-password";
+		var command = new RegisterAsOwnerCommand.RegisterOwnerCommandRequest(request, callbackBaseUrl!);
 		var result = await _sender.Send(command, cancellationToken);
 		return result.IsSuccess ? Ok(result.Value) : Unauthorized();
 	}
