@@ -19,6 +19,7 @@ Este proyecto demuestra prácticas modernas de desarrollo backend con un enfoque
 - **Identity Core - Autenticación y Seguridad** – autenticación basada en **JWT**, autorización por roles y endpoints seguros.
 - **Fluent Validation** - para validacion de los requests.
 - **Swagger** - para describir los REST APIs.
+- **SMTP** - para envio de emails de bienvenida.
 
 ---
 ### ⚙️ Funcionalidades
@@ -69,6 +70,7 @@ This project demonstrates modern backend development practices with a focus on *
 - **Identity Core – Authentication and Security** – JWT-based authentication, role-based authorization, and secure endpoints
 - **Fluent Validation** - for validating the requests.
 - **Swagger** - to describe the REST APIs.
+- **SMTP** - to send the welcome email.
 
 ---
 
